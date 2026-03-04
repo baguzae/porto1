@@ -1,0 +1,1669 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BaguzAe S.Kom - Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg: #0a0a0b;
+            --bg-secondary: #141416;
+            --fg: #f5f5f4;
+            --fg-muted: #a1a1aa;
+            --accent: #f59e0b;
+            --accent-secondary: #14b8a6;
+            --card: #1c1c1f;
+            --card-hover: #252528;
+            --border: #2a2a2d;
+            --gradient-start: #f59e0b;
+            --gradient-end: #ea580c;
+        }
+
+        [data-theme="light"] {
+            --bg: #faf8f5;
+            --bg-secondary: #f0ebe3;
+            --fg: #1c1c1f;
+            --fg-muted: #6b7280;
+            --accent: #d97706;
+            --accent-secondary: #0d9488;
+            --card: #ffffff;
+            --card-hover: #f9fafb;
+            --border: #e5e5e5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--bg);
+            color: var(--fg);
+            overflow-x: hidden;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+        
+        body.modal-open {
+            overflow: hidden;
+        }
+
+        .font-display {
+            font-family: 'Syne', sans-serif;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 4px;
+        }
+
+        .bg-pattern {
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(245, 158, 11, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(20, 184, 166, 0.06) 0%, transparent 40%),
+                radial-gradient(circle at 40% 80%, rgba(245, 158, 11, 0.05) 0%, transparent 45%);
+            background-attachment: fixed;
+        }
+
+        .grid-pattern {
+            background-image: 
+                linear-gradient(var(--border) 1px, transparent 1px),
+                linear-gradient(90deg, var(--border) 1px, transparent 1px);
+            background-size: 60px 60px;
+            opacity: 0.3;
+        }
+
+        .btn-3d {
+            position: relative;
+            transform-style: preserve-3d;
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+            cursor: pointer;
+        }
+
+        .btn-3d::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: inherit;
+            border-radius: inherit;
+            transform: translateZ(-10px);
+            filter: blur(15px);
+            opacity: 0.5;
+            transition: all 0.3s ease;
+        }
+
+        .btn-3d:hover {
+            transform: translateY(-3px) rotateX(5deg);
+        }
+
+        .btn-3d:active {
+            transform: translateY(1px) rotateX(-2deg) scale(0.98);
+        }
+
+        .card-3d {
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .card-3d:hover {
+            transform: translateY(-8px) rotateX(2deg) rotateY(-2deg);
+        }
+
+        .card-3d::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .card-3d:hover::after {
+            opacity: 1;
+        }
+
+        .ripple {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ripple-effect {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            transform: scale(0);
+            animation: ripple-animation 0.6s linear;
+            pointer-events: none;
+        }
+
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        .pulse-glow {
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(245, 158, 11, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(245, 158, 11, 0.6); }
+        }
+
+        .float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(2deg); }
+        }
+
+        .testimonial-slider {
+            display: flex;
+            transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .testimonial-slide {
+            min-width: 100%;
+            padding: 0 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .testimonial-slide {
+                min-width: 50%;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .testimonial-slide {
+                min-width: 33.333%;
+            }
+        }
+
+        .popup-notification {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 1000;
+            transform: translateX(400px);
+            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .popup-notification.show {
+            transform: translateX(0);
+        }
+
+        .music-player {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            z-index: 100;
+        }
+
+        .progress-bar {
+            height: 4px;
+            background: var(--border);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+
+        .skill-bar {
+            height: 8px;
+            background: var(--border);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .skill-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+            border-radius: 4px;
+            width: 0;
+            transition: width 1.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--accent), var(--accent-secondary));
+        }
+
+        @media (max-width: 768px) {
+            .timeline-line {
+                left: 20px;
+            }
+        }
+
+        .nav-link {
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        /* FIX: Modal Overlay using Flexbox for centering */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* FIX: Modal Content uses relative positioning inside flex container */
+        .modal-content {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 1.5rem;
+            width: 100%;
+            max-width: 42rem;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            transform: scale(0.9);
+            opacity: 0;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        /* Custom scrollbar for modal */
+        .modal-content::-webkit-scrollbar {
+            width: 6px;
+        }
+        .modal-content::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .modal-content::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 3px;
+        }
+
+        .particle {
+            position: absolute;
+            pointer-events: none;
+            border-radius: 50%;
+            animation: particle-float 3s ease-in-out infinite;
+        }
+
+        @keyframes particle-float {
+            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.6; }
+            50% { transform: translateY(-100px) rotate(180deg); opacity: 0.2; }
+        }
+
+        .tech-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.25rem 0.75rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .tech-badge:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .counter {
+            display: inline-block;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        *:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        .theme-toggle {
+            width: 60px;
+            height: 30px;
+            background: var(--card);
+            border-radius: 15px;
+            position: relative;
+            cursor: pointer;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle::after {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            background: var(--accent);
+            border-radius: 50%;
+            top: 2px;
+            left: 3px;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        [data-theme="light"] .theme-toggle::after {
+            left: 33px;
+        }
+
+        .social-icon {
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+            cursor: pointer;
+        }
+
+        .social-icon:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            transform: translateY(-4px) rotateZ(-5deg);
+        }
+
+        .social-icon svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--fg);
+            transition: fill 0.3s ease;
+        }
+
+        .social-icon:hover svg {
+            fill: var(--bg);
+        }
+
+        .slider-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--border);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .slider-dot.active {
+            background: var(--accent);
+            transform: scale(1.3);
+        }
+
+        .avatar-ring {
+            padding: 3px;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            border-radius: 50%;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .fade-up {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+        
+        .fade-in {
+            opacity: 0;
+        }
+
+        .scale-in {
+            opacity: 0;
+            transform: scale(0.8);
+        }
+
+        .cube-container {
+            perspective: 1000px;
+            width: 100px;
+            height: 100px;
+        }
+
+        .cube {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: rotate-cube 20s linear infinite;
+        }
+
+        @keyframes rotate-cube {
+            from { transform: rotateX(0deg) rotateY(0deg); }
+            to { transform: rotateX(360deg) rotateY(360deg); }
+        }
+
+        .cube-face {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border: 1px solid var(--accent);
+            background: rgba(245, 158, 11, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        .cube-face:nth-child(1) { transform: rotateY(0deg) translateZ(50px); }
+        .cube-face:nth-child(2) { transform: rotateY(90deg) translateZ(50px); }
+        .cube-face:nth-child(3) { transform: rotateY(180deg) translateZ(50px); }
+        .cube-face:nth-child(4) { transform: rotateY(-90deg) translateZ(50px); }
+        .cube-face:nth-child(5) { transform: rotateX(90deg) translateZ(50px); }
+        .cube-face:nth-child(6) { transform: rotateX(-90deg) translateZ(50px); }
+        
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="bg-pattern min-h-screen">
+    <!-- Background Grid -->
+    <div class="fixed inset-0 grid-pattern pointer-events-none"></div>
+
+    <!-- Floating Particles -->
+    <div id="particles" class="fixed inset-0 pointer-events-none overflow-hidden"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-[var(--bg)]/80 border-b border-[var(--border)]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="#" class="font-display font-bold text-xl gradient-text btn-3d ripple" onclick="createRipple(event)">
+                    © BaguzAe
+                </a>
+
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#home" class="nav-link text-sm font-medium hover:text-[var(--accent)] transition-colors">Home</a>
+                    <a href="#about" class="nav-link text-sm font-medium hover:text-[var(--accent)] transition-colors">About</a>
+                    <a href="#skills" class="nav-link text-sm font-medium hover:text-[var(--accent)] transition-colors">Skills</a>
+                    <a href="#career" class="nav-link text-sm font-medium hover:text-[var(--accent)] transition-colors">Career</a>
+                    <a href="#projects" class="nav-link text-sm font-medium hover:text-[var(--accent)] transition-colors">Projects</a>
+                    <a href="#testimonials" class="nav-link text-sm font-medium hover:text-[var(--accent)] transition-colors">Testimonials</a>
+                    <a href="#contact" class="nav-link text-sm font-medium hover:text-[var(--accent)] transition-colors">Contact</a>
+                </div>
+
+                <div class="flex items-center gap-4">
+                    <div class="theme-toggle ripple" onclick="toggleTheme(); createRipple(event)" role="button" tabindex="0" aria-label="Toggle theme"></div>
+                    
+                    <button id="mobileMenuBtn" class="md:hidden p-2 rounded-lg bg-[var(--card)] border border-[var(--border)] btn-3d" onclick="toggleMobileMenu(); createRipple(event)">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-[var(--card)] border-t border-[var(--border)]">
+            <div class="px-4 py-4 space-y-3">
+                <a href="#home" class="block py-2 px-4 rounded-lg hover:bg-[var(--bg-secondary)] transition-colors">Home</a>
+                <a href="#about" class="block py-2 px-4 rounded-lg hover:bg-[var(--bg-secondary)] transition-colors">About</a>
+                <a href="#skills" class="block py-2 px-4 rounded-lg hover:bg-[var(--bg-secondary)] transition-colors">Skills</a>
+                <a href="#career" class="block py-2 px-4 rounded-lg hover:bg-[var(--bg-secondary)] transition-colors">Career</a>
+                <a href="#projects" class="block py-2 px-4 rounded-lg hover:bg-[var(--bg-secondary)] transition-colors">Projects</a>
+                <a href="#testimonials" class="block py-2 px-4 rounded-lg hover:bg-[var(--bg-secondary)] transition-colors">Testimonials</a>
+                <a href="#contact" class="block py-2 px-4 rounded-lg hover:bg-[var(--bg-secondary)] transition-colors">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center relative pt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="text-center lg:text-left">
+                    <p class="text-[var(--accent)] font-medium mb-4 fade-up">Welcome to my portfolio</p>
+                    <h1 class="font-display text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 fade-up" style="transition-delay: 0.1s">
+                        Hi, I'm <span class="gradient-text">BaguzAe</span>
+                        <br>S.Kom
+                    </h1>
+                    <p class="text-[var(--fg-muted)] text-lg mb-8 max-w-lg fade-up" style="transition-delay: 0.2s">
+                        Full Stack Developer dengan passion dalam membangun aplikasi web modern, scalable, dan user-friendly. Berpengalaman 5+ tahun dalam industri teknologi.
+                    </p>
+                    
+                    <div class="flex flex-wrap gap-4 justify-center lg:justify-start fade-up" style="transition-delay: 0.3s">
+                        <a href="#projects" class="btn-3d ripple px-8 py-4 bg-[var(--accent)] text-[var(--bg)] font-semibold rounded-xl hover:shadow-lg" onclick="createRipple(event)">
+                            Lihat Proyek
+                        </a>
+                        <a href="#contact" class="btn-3d ripple px-8 py-4 bg-[var(--card)] border border-[var(--border)] font-semibold rounded-xl hover:border-[var(--accent)]" onclick="createRipple(event)">
+                            Hubungi Saya
+                        </a>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-6 mt-12 fade-up" style="transition-delay: 0.4s">
+                        <div class="text-center lg:text-left">
+                            <p class="font-display text-3xl font-bold gradient-text counter" data-target="5">0</p>
+                            <p class="text-[var(--fg-muted)] text-sm">Tahun Pengalaman</p>
+                        </div>
+                        <div class="text-center lg:text-left">
+                            <p class="font-display text-3xl font-bold gradient-text counter" data-target="70">0</p>
+                            <p class="text-[var(--fg-muted)] text-sm">Proyek Selesai</p>
+                        </div>
+                        <div class="text-center lg:text-left">
+                            <p class="font-display text-3xl font-bold gradient-text counter" data-target="40">0</p>
+                            <p class="text-[var(--fg-muted)] text-sm">Klien Puas</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative flex justify-center items-center">
+                    <div class="absolute w-80 h-80 rounded-full bg-gradient-to-br from-[var(--accent)]/20 to-[var(--accent-secondary)]/20 blur-3xl"></div>
+                    
+                    <div class="absolute -top-10 -left-10 w-20 h-20 bg-[var(--card)] rounded-2xl border border-[var(--border)] flex items-center justify-center float" style="animation-delay: 0s">
+                        <svg class="w-10 h-10 text-[var(--accent)]" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                        </svg>
+                    </div>
+                    <div class="absolute -bottom-5 -right-5 w-16 h-16 bg-[var(--card)] rounded-2xl border border-[var(--border)] flex items-center justify-center float" style="animation-delay: 1s">
+                        <svg class="w-8 h-8 text-[var(--accent-secondary)]" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/>
+                        </svg>
+                    </div>
+
+                    <div class="avatar-ring relative z-10 pulse-glow">
+                        <img 
+                            src="https://baguzae.github.io/ntah/potobgz.jpeg" 
+                            alt="BaguzAe S.Kom" 
+                            class="w-64 h-64 rounded-full object-cover"
+                        >
+                    </div>
+
+                    <div class="cube-container absolute -right-10 top-10">
+                        <div class="cube">
+                            <div class="cube-face">&lt;/&gt;</div>
+                            <div class="cube-face">{ }</div>
+                            <div class="cube-face">JS</div>
+                            <div class="cube-face">DB</div>
+                            <div class="cube-face">API</div>
+                            <div class="cube-face">UI</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2">
+            <span class="text-[var(--fg-muted)] text-sm">Scroll down</span>
+            <div class="w-6 h-10 border-2 border-[var(--border)] rounded-full flex justify-center pt-2">
+                <div class="w-1 h-3 bg-[var(--accent)] rounded-full animate-bounce"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <p class="text-[var(--accent)] font-medium mb-2 fade-up">Tentang Saya</p>
+                <h2 class="font-display text-4xl sm:text-5xl font-bold fade-up" style="transition-delay: 0.1s">Kenali Lebih Dekat</h2>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="card-3d bg-[var(--card)] rounded-3xl p-8 border border-[var(--border)] fade-up">
+                    <h3 class="font-display text-2xl font-bold mb-4">Siapa Saya?</h3>
+                    <p class="text-[var(--fg-muted)] mb-6 leading-relaxed">
+                        Saya BaguzAe, lulusan S1 Teknik Informatika dengan gelar S.Kom. Memiliki passion yang tinggi dalam pengembangan web dan teknologi terkini. Fokus utama saya adalah membangun aplikasi yang tidak hanya fungsional tetapi juga memberikan pengalaman pengguna yang luar biasa.
+                    </p>
+                    <p class="text-[var(--fg-muted)] mb-6 leading-relaxed">
+                        Dengan pengalaman lebih dari 8 tahun di industri, saya telah bekerja dengan berbagai perusahaan mulai dari startup hingga enterprise, membantu mereka mewujudkan visi digital mereka.
+                    </p>
+
+                    <div class="flex gap-3 mt-6">
+                        <a href="https://instagram.com/@baguzae11_" target="_blank" class="social-icon btn-3d ripple" onclick="createRipple(event)" aria-label="Instagram">
+                            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                        </a>
+                        <a href="https://github.com/baguzae" target="_blank" class="social-icon btn-3d ripple" onclick="createRipple(event)" aria-label="GitHub">
+                            <svg viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        </a>
+                        <a href="https://youtube.com/@RanzStars" target="_blank" class="social-icon btn-3d ripple" onclick="createRipple(event)" aria-label="YouTube">
+                            <svg viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
+                        </a>
+                        <a href="https://linkedin.com/in/slametskom" target="_blank" class="social-icon btn-3d ripple" onclick="createRipple(event)" aria-label="LinkedIn">
+                            <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4 fade-up" style="transition-delay: 0.2s">
+                    <div class="card-3d bg-[var(--card)] rounded-2xl p-6 border border-[var(--border)] ripple" onclick="createRipple(event)">
+                        <svg class="w-10 h-10 text-[var(--accent)] mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                        <h4 class="font-semibold mb-1">Web Development</h4>
+                        <p class="text-[var(--fg-muted)] text-sm">Frontend & Backend</p>
+                    </div>
+
+                    <div class="card-3d bg-[var(--card)] rounded-2xl p-6 border border-[var(--border)] ripple" onclick="createRipple(event)">
+                        <svg class="w-10 h-10 text-[var(--accent-secondary)] mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                        </svg>
+                        <h4 class="font-semibold mb-1">Mobile Apps</h4>
+                        <p class="text-[var(--fg-muted)] text-sm">iOS & Android</p>
+                    </div>
+
+                    <div class="card-3d bg-[var(--card)] rounded-2xl p-6 border border-[var(--border)] ripple" onclick="createRipple(event)">
+                        <svg class="w-10 h-10 text-[var(--accent)] mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"/>
+                        </svg>
+                        <h4 class="font-semibold mb-1">Database</h4>
+                        <p class="text-[var(--fg-muted)] text-sm">SQL & NoSQL</p>
+                    </div>
+
+                    <div class="card-3d bg-[var(--card)] rounded-2xl p-6 border border-[var(--border)] ripple" onclick="createRipple(event)">
+                        <svg class="w-10 h-10 text-[var(--accent-secondary)] mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/>
+                        </svg>
+                        <h4 class="font-semibold mb-1">Cloud Services</h4>
+                        <p class="text-[var(--fg-muted)] text-sm">AWS & GCP</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <p class="text-[var(--accent)] font-medium mb-2 fade-up">Keahlian</p>
+                <h2 class="font-display text-4xl sm:text-5xl font-bold fade-up" style="transition-delay: 0.1s">Technical Skills</h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="card-3d bg-[var(--card)] rounded-2xl p-6 border border-[var(--border)] fade-up skill-card" onclick="animateSkillCard(this)">
+                    <h3 class="font-display text-xl font-bold mb-6 flex items-center gap-3">
+                        <span class="w-10 h-10 rounded-lg bg-[var(--accent)]/20 flex items-center justify-center">
+                            <svg class="w-5 h-5 text-[var(--accent)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+                            </svg>
+                        </span>
+                        Frontend
+                    </h3>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between mb-2"><span class="text-sm">React / Next.js</span><span class="text-[var(--accent)] text-sm font-semibold">95%</span></div>
+                            <div class="skill-bar"><div class="skill-fill" data-width="95"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2"><span class="text-sm">TypeScript</span><span class="text-[var(--accent)] text-sm font-semibold">90%</span></div>
+                            <div class="skill-bar"><div class="skill-fill" data-width="90"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2"><span class="text-sm">Vue.js</span><span class="text-[var(--accent)] text-sm font-semibold">85%</span></div>
+                            <div class="skill-bar"><div class="skill-fill" data-width="85"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2"><span class="text-sm">Tailwind CSS</span><span class="text-[var(--accent)] text-sm font-semibold">95%</span></div>
+                            <div class="skill-bar"><div class="skill-fill" data-width="95"></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-3d bg-[var(--card)] rounded-2xl p-6 border border-[var(--border)] fade-up skill-card" style="transition-delay: 0.1s" onclick="animateSkillCard(this)">
+                    <h3 class="font-display text-xl font-bold mb-6 flex items-center gap-3">
+                        <span class="w-10 h-10 rounded-lg bg-[var(--accent-secondary)]/20 flex items-center justify-center">
+                            <svg class="w-5 h-5 text-[var(--accent-secondary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2"/>
+                            </svg>
+                        </span>
+                        Backend
+                    </h3>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between mb-2"><span class="text-sm">Node.js / Express</span><span class="text-[var(--accent)] text-sm font-semibold">92%</span></div>
+                            <div class="skill-bar"><div class="skill-fill" data-width="92"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2"><span class="text-sm">Python / Django</span><span class="text-[var(--accent)] text-sm font-semibold">85%</span></div>
+                            <div class="skill-bar"><div class="skill-fill" data-width="85"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2"><span class="text-sm">PHP / Laravel</span><span class="text-[var(--accent)] text-sm font-semibold">88%</span></div>
+                            <div class="skill-bar"><div class="skill-fill" data-width="88"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2"><span class="text-sm">Go</span><span class="text-[var(--accent)] text-sm font-semibold">75%</span></div>
+                            <div class="skill-bar"><div class="skill-fill" data-width="75"></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-3d bg-[var(--card)] rounded-2xl p-6 border border-[var(--border)] fade-up skill-card" style="transition-delay: 0.2s" onclick="animateSkillCard(this)">
+                    <h3 class="font-display text-xl font-bold mb-6 flex items-center gap-3">
+                        <span class="w-10 h-10 rounded-lg bg-[var(--accent)]/20 flex items-center justify-center">
+                            <svg class="w-5 h-5 text-[var(--accent)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"/>
+                            </svg>
+                        </span>
+                        Database & DevOps
+                    </h3>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between mb-2"><span class="text-sm">PostgreSQL / MySQL</span><span class="text-[var(--accent)] text-sm font-semibold">90%</span></div>
+                            <div class="skill-bar"><div class="skill-fill" data-width="90"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2"><span class="text-sm">MongoDB</span><span class="text-[var(--accent)] text-sm font-semibold">88%</span></div>
+                            <div class="skill-bar"><div class="skill-fill" data-width="88"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2"><span class="text-sm">Docker / Kubernetes</span><span class="text-[var(--accent)] text-sm font-semibold">82%</span></div>
+                            <div class="skill-bar"><div class="skill-fill" data-width="82"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2"><span class="text-sm">AWS / GCP</span><span class="text-[var(--accent)] text-sm font-semibold">85%</span></div>
+                            <div class="skill-bar"><div class="skill-fill" data-width="85"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-16 fade-up" style="transition-delay: 0.3s">
+                <p class="text-center text-[var(--fg-muted)] mb-6">Tech Stack yang saya gunakan</p>
+                <div class="flex flex-wrap justify-center gap-3">
+                    <span class="tech-badge btn-3d">React</span>
+                    <span class="tech-badge btn-3d">Next.js</span>
+                    <span class="tech-badge btn-3d">TypeScript</span>
+                    <span class="tech-badge btn-3d">Node.js</span>
+                    <span class="tech-badge btn-3d">Python</span>
+                    <span class="tech-badge btn-3d">Go</span>
+                    <span class="tech-badge btn-3d">PostgreSQL</span>
+                    <span class="tech-badge btn-3d">MongoDB</span>
+                    <span class="tech-badge btn-3d">Redis</span>
+                    <span class="tech-badge btn-3d">Docker</span>
+                    <span class="tech-badge btn-3d">AWS</span>
+                    <span class="tech-badge btn-3d">GraphQL</span>
+                    <span class="tech-badge btn-3d">Git</span>
+                    <span class="tech-badge btn-3d">Figma</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Career Timeline -->
+    <section id="career" class="py-20 relative">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <p class="text-[var(--accent)] font-medium mb-2 fade-up">Perjalanan Karir</p>
+                <h2 class="font-display text-4xl sm:text-5xl font-bold fade-up" style="transition-delay: 0.1s">Career Journey</h2>
+            </div>
+
+            <div class="relative">
+                <div class="timeline-line"></div>
+
+                <div class="space-y-12">
+                    <div class="relative flex items-center fade-up">
+                        <div class="hidden md:block w-1/2 pr-12 text-right">
+                            <div class="card-3d bg-[var(--card)] rounded-2xl p-6 border border-[var(--border)] inline-block text-left ripple" onclick="createRipple(event)">
+                                <span class="text-[var(--accent)] text-sm font-semibold">2024 - Sekarang</span>
+                                <h3 class="font-display text-xl font-bold mt-1">Senior Full Stack Developer</h3>
+                                <p class="text-[var(--fg-muted)] text-sm mt-2">TechCorp Indonesia</p>
+                                <p class="text-[var(--fg-muted)] text-sm mt-2">Memimpin tim pengembangan untuk proyek enterprise-scale, mengimplementasikan arsitektur microservices.</p>
+                            </div>
+                        </div>
+                        <div class="absolute w-4 h-4 bg-[var(--accent)] rounded-full border-4 border-[var(--bg)] left-1/2 transform -translate-x-1/2 md:left-1/2 left-5"></div>
+                        <div class="md:w-1/2 md:pl-12 pl-12 md:text-left md:block hidden"></div>
+                        <div class="md:hidden block pl-12">
+                            <div class="card-3d bg-[var(--card)] rounded-2xl p-6 border border-[var(--border)] ripple" onclick="createRipple(event)">
+                                <span class="text-[var(--accent)] text-sm font-semibold">2024 - Sekarang</span>
+                                <h3 class="font-display text-xl font-bold mt-1">Senior Full Stack Developer</h3>
+                                <p class="text-[var(--fg-muted)] text-sm mt-2">TechCorp Indonesia</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="relative flex items-center fade-up" style="transition-delay: 0.1s">
+                        <div class="hidden md:block w-1/2"></div>
+                        <div class="absolute w-4 h-4 bg-[var(--accent-secondary)] rounded-full border-4 border-[var(--bg)] left-1/2 transform -translate-x-1/2 md:left-1/2 left-5"></div>
+                        <div class="md:w-1/2 md:pl-12 pl-12">
+                            <div class="card-3d bg-[var(--card)] rounded-2xl p-6 border border-[var(--border)] ripple" onclick="createRipple(event)">
+                                <span class="text-[var(--accent-secondary)] text-sm font-semibold">2022 - 2023</span>
+                                <h3 class="font-display text-xl font-bold mt-1">Full Stack Developer</h3>
+                                <p class="text-[var(--fg-muted)] text-sm mt-2">Startup Digital Nusantara</p>
+                                <p class="text-[var(--fg-muted)] text-sm mt-2">Mengembangkan platform e-commerce dengan 500k+ active users. Implementasi sistem pembayaran dan inventory.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="relative flex items-center fade-up" style="transition-delay: 0.2s">
+                        <div class="hidden md:block w-1/2 pr-12 text-right">
+                            <div class="card-3d bg-[var(--card)] rounded-2xl p-6 border border-[var(--border)] inline-block text-left ripple" onclick="createRipple(event)">
+                                <span class="text-[var(--accent)] text-sm font-semibold">2021 - 2022</span>
+                                <h3 class="font-display text-xl font-bold mt-1">Frontend Developer</h3>
+                                <p class="text-[var(--fg-muted)] text-sm mt-2">Web Solutions Jakarta</p>
+                                <p class="text-[var(--fg-muted)] text-sm mt-2">Fokus pada pengembangan UI/UX dan optimasi performa web. Bekerja dengan React dan Vue.js.</p>
+                            </div>
+                        </div>
+                        <div class="absolute w-4 h-4 bg-[var(--accent)] rounded-full border-4 border-[var(--bg)] left-1/2 transform -translate-x-1/2 md:left-1/2 left-5"></div>
+                        <div class="md:w-1/2 md:pl-12 pl-12 md:text-left md:block hidden"></div>
+                        <div class="md:hidden block pl-12">
+                            <div class="card-3d bg-[var(--card)] rounded-2xl p-6 border border-[var(--border)] ripple" onclick="createRipple(event)">
+                                <span class="text-[var(--accent)] text-sm font-semibold">2021 - 2022</span>
+                                <h3 class="font-display text-xl font-bold mt-1">Frontend Developer</h3>
+                                <p class="text-[var(--fg-muted)] text-sm mt-2">Web Solutions Jakarta</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="relative flex items-center fade-up" style="transition-delay: 0.3s">
+                        <div class="hidden md:block w-1/2"></div>
+                        <div class="absolute w-4 h-4 bg-[var(--accent-secondary)] rounded-full border-4 border-[var(--bg)] left-1/2 transform -translate-x-1/2 md:left-1/2 left-5"></div>
+                        <div class="md:w-1/2 md:pl-12 pl-12">
+                            <div class="card-3d bg-[var(--card)] rounded-2xl p-6 border border-[var(--border)] ripple" onclick="createRipple(event)">
+                                <span class="text-[var(--accent-secondary)] text-sm font-semibold">2020 - 2021</span>
+                                <h3 class="font-display text-xl font-bold mt-1">Junior Web Developer</h3>
+                                <p class="text-[var(--fg-muted)] text-sm mt-2">Digital Agency Tokyo</p>
+                                <p class="text-[var(--fg-muted)] text-sm mt-2">Memulai karir dengan mengerjakan berbagai proyek website klien. Belajar best practices dalam pengembangan web.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <p class="text-[var(--accent)] font-medium mb-2 fade-up">Portfolio</p>
+                <h2 class="font-display text-4xl sm:text-5xl font-bold fade-up" style="transition-delay: 0.1s">Proyek Terbaru</h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="projectsGrid">
+                <!-- Projects rendered by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-20 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <p class="text-[var(--accent)] font-medium mb-2 fade-up">Testimoni</p>
+                <h2 class="font-display text-4xl sm:text-5xl font-bold fade-up" style="transition-delay: 0.1s">Apa Kata Klien</h2>
+            </div>
+
+            <div class="relative">
+                <div class="overflow-hidden rounded-3xl">
+                    <div class="testimonial-slider" id="testimonialSlider">
+                        <!-- Testimonials rendered by JS -->
+                    </div>
+                </div>
+
+                <button class="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-[var(--card)] border border-[var(--border)] rounded-full flex items-center justify-center btn-3d ripple" onclick="slideTestimonials(-1); createRipple(event)" aria-label="Previous testimonial">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                    </svg>
+                </button>
+                <button class="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-[var(--card)] border border-[var(--border)] rounded-full flex items-center justify-center btn-3d ripple" onclick="slideTestimonials(1); createRipple(event)" aria-label="Next testimonial">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                    </svg>
+                </button>
+
+                <div class="flex justify-center gap-2 mt-8" id="sliderDots">
+                    <!-- Dots rendered by JS -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 relative">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <p class="text-[var(--accent)] font-medium mb-2 fade-up">Kontak</p>
+                <h2 class="font-display text-4xl sm:text-5xl font-bold fade-up" style="transition-delay: 0.1s">Mari Bekerja Sama</h2>
+            </div>
+
+            <div class="card-3d bg-[var(--card)] rounded-3xl p-8 border border-[var(--border)] fade-up">
+                <form id="contactForm" class="space-y-6">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium mb-2" for="name">Nama</label>
+                            <input type="text" id="name" name="name" class="w-full px-4 py-3 bg-[var(--bg-secondary)] border border-[var(--border)] rounded-xl focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/20 transition-all outline-none" placeholder="Nama Anda" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2" for="email">Email</label>
+                            <input type="email" id="email" name="email" class="w-full px-4 py-3 bg-[var(--bg-secondary)] border border-[var(--border)] rounded-xl focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/20 transition-all outline-none" placeholder="email@example.com" required>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2" for="subject">Subjek</label>
+                        <input type="text" id="subject" name="subject" class="w-full px-4 py-3 bg-[var(--bg-secondary)] border border-[var(--border)] rounded-xl focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/20 transition-all outline-none" placeholder="Subjek pesan" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2" for="message">Pesan</label>
+                        <textarea id="message" name="message" rows="5" class="w-full px-4 py-3 bg-[var(--bg-secondary)] border border-[var(--border)] rounded-xl focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/20 transition-all outline-none resize-none" placeholder="Tulis pesan Anda..." required></textarea>
+                    </div>
+                    <button type="submit" class="w-full btn-3d ripple px-8 py-4 bg-[var(--accent)] text-[var(--bg)] font-semibold rounded-xl" onclick="createRipple(event)">Kirim Pesan</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 border-t border-[var(--border)]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="text-center md:text-left">
+                    <a href="#" class="font-display font-bold text-xl gradient-text">© BaguzAe</a>
+                    <p class="text-[var(--fg-muted)] text-sm mt-2">Full Stack Developer</p>
+                </div>
+                <div class="flex gap-3">
+                    <a href="https://instagram.com/@baguzae11_" target="_blank" class="social-icon btn-3d ripple" onclick="createRipple(event)" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+                    <a href="https://github.com/baguzae" target="_blank" class="social-icon btn-3d ripple" onclick="createRipple(event)" aria-label="GitHub"><svg viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a>
+                    <a href="https://youtube.com/@RanzStars" target="_blank" class="social-icon btn-3d ripple" onclick="createRipple(event)" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg></a>
+                    <a href="https://linkedin.com/in/slametskom" target="_blank" class="social-icon btn-3d ripple" onclick="createRipple(event)" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
+                </div>
+                <p class="text-[var(--fg-muted)] text-sm">© 2026 BaguzAe S.Kom. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Music Player -->
+    <div class="music-player">
+        <div class="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-4 backdrop-blur-xl">
+            <div class="flex items-center gap-3">
+                <button id="playBtn" class="w-10 h-10 bg-[var(--accent)] rounded-full flex items-center justify-center btn-3d ripple" onclick="toggleMusic(); createRipple(event)" aria-label="Play/Pause music">
+                    <svg id="playIcon" class="w-5 h-5 text-[var(--bg)]" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                    <svg id="pauseIcon" class="w-5 h-5 text-[var(--bg)] hidden" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                </button>
+                <div class="flex-1">
+                    <p class="text-sm font-medium truncate" id="musicTitle">Ambient Music</p>
+                    <div class="progress-bar mt-1 cursor-pointer" onclick="seekMusic(event)">
+                        <div class="progress-fill" id="musicProgress" style="width: 0%"></div>
+                    </div>
+                </div>
+                <button class="p-2 hover:bg-[var(--bg-secondary)] rounded-lg transition-colors" onclick="openMusicModal()" aria-label="Change music">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+    <audio id="bgMusic" loop><source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg"></audio>
+
+    <!-- Popup Notification -->
+    <div class="popup-notification" id="popupNotification">
+        <div class="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-4 shadow-2xl max-w-sm">
+            <div class="flex items-start gap-3">
+                <div class="avatar-ring flex-shrink-0"><img id="popupAvatar" src="" alt="" class="w-12 h-12 rounded-full object-cover"></div>
+                <div class="flex-1">
+                    <p class="font-semibold text-sm" id="popupName"></p>
+                    <p class="text-[var(--fg-muted)] text-xs mt-1" id="popupMessage"></p>
+                    <p class="text-[var(--accent)] text-xs mt-2 font-medium">Baru saja memberikan testimoni</p>
+                </div>
+                <button class="p-1 hover:bg-[var(--bg-secondary)] rounded-lg transition-colors" onclick="closePopup()" aria-label="Close notification"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FIX: Music Modal Structure -->
+    <div class="modal-overlay" id="musicModal">
+        <div class="modal-content p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="font-display text-xl font-bold">Ubah Musik</h3>
+                <button class="p-2 hover:bg-[var(--bg-secondary)] rounded-lg transition-colors" onclick="closeMusicModal()" aria-label="Close modal"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+            </div>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium mb-2">URL Musik</label>
+                    <input type="url" id="musicUrlInput" class="w-full px-4 py-3 bg-[var(--bg-secondary)] border border-[var(--border)] rounded-xl focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/20 transition-all outline-none" placeholder="https://example.com/music.mp3">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">Judul Musik</label>
+                    <input type="text" id="musicTitleInput" class="w-full px-4 py-3 bg-[var(--bg-secondary)] border border-[var(--border)] rounded-xl focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/20 transition-all outline-none" placeholder="Nama musik">
+                </div>
+                <button class="w-full btn-3d ripple px-6 py-3 bg-[var(--accent)] text-[var(--bg)] font-semibold rounded-xl" onclick="changeMusic(); createRipple(event)">Simpan Perubahan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FIX: Project Detail Modal Structure -->
+    <div class="modal-overlay" id="projectModal">
+        <div class="modal-content p-6">
+            <div class="flex justify-between items-start mb-6">
+                <h3 class="font-display text-2xl font-bold pr-8" id="modalProjectTitle"></h3>
+                <button class="p-2 hover:bg-[var(--bg-secondary)] rounded-lg transition-colors flex-shrink-0" onclick="closeProjectModal()" aria-label="Close modal"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+            </div>
+            <img id="modalProjectImage" src="" alt="" class="w-full h-64 object-cover rounded-2xl mb-6">
+            <p class="text-[var(--fg-muted)] mb-6" id="modalProjectDesc"></p>
+            
+            <div class="mb-6">
+                <h4 class="font-semibold mb-3">Tech Stack</h4>
+                <div class="flex flex-wrap gap-2" id="modalProjectTech"></div>
+            </div>
+
+            <div class="mb-6">
+                <h4 class="font-semibold mb-3">Fitur Utama</h4>
+                <ul class="space-y-2" id="modalProjectFeatures"></ul>
+            </div>
+
+            <div>
+                <h4 class="font-semibold mb-3">Contoh Kode</h4>
+                <div class="bg-[var(--bg-secondary)] rounded-xl p-4 overflow-x-auto">
+                    <pre><code id="modalProjectCode" class="text-sm text-[var(--fg-muted)] whitespace-pre-wrap"></code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ========== DATA ==========
+        const projects = [
+            {
+                id: 1, title: "E-Commerce Platform", description: "Platform e-commerce modern dengan fitur lengkap termasuk payment gateway, inventory management, dan analytics dashboard.",
+                image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop",
+                tech: ["Next.js", "TypeScript", "PostgreSQL", "Stripe", "Redis"],
+                features: ["Real-time inventory tracking", "Multi-payment gateway integration", "Admin dashboard dengan analytics", "Responsive design untuk semua device"],
+                code: `// API Route untuk checkout
+import { Stripe } from 'stripe';
+const stripe = new Stripe(process.env.STRIPE_KEY);
+
+export async function POST(req: Request) {
+  const { items, userId } = await req.json();
+  const session = await stripe.checkout.sessions.create({
+    payment_method_types: ['card'],
+    line_items: items.map(item => ({
+      price_data: {
+        currency: 'idr',
+        product_data: { name: item.name },
+        unit_amount: item.price * 100,
+      },
+      quantity: item.qty,
+    })),
+    mode: 'payment',
+    success_url: 'https://example.com/success',
+  });
+  return Response.json({ url: session.url });
+}`
+            },
+            {
+                id: 2, title: "Healthcare Management System", description: "Sistem manajemen rumah sakit dengan fitur appointment, medical records, dan telemedicine.",
+                image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&h=400&fit=crop",
+                tech: ["React", "Node.js", "MongoDB", "Socket.io", "WebRTC"],
+                features: ["Video consultation dengan dokter", "Electronic medical records", "Appointment scheduling", "Push notification untuk reminder"],
+                code: `// Socket.io untuk real-time chat
+io.on('connection', (socket) => {
+  socket.on('join-room', (roomId) => {
+    socket.join(roomId);
+    socket.to(roomId).emit('user-joined', socket.id);
+  });
+  socket.on('send-message', (data) => {
+    io.to(data.roomId).emit('receive-message', {
+      message: data.message,
+      sender: data.sender,
+      timestamp: new Date(),
+    });
+  });
+});`
+            },
+            {
+                id: 3, title: "FinTech Dashboard", description: "Dashboard analitik untuk fintech dengan visualisasi data real-time dan machine learning predictions.",
+                image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop",
+                tech: ["Vue.js", "Python", "FastAPI", "TensorFlow", "D3.js"],
+                features: ["Real-time stock price tracking", "ML-based fraud detection", "Interactive data visualization", "Automated report generation"],
+                code: `# FastAPI endpoint untuk prediksi
+from fastapi import FastAPI
+from pydantic import BaseModel
+
+app = FastAPI()
+
+class Transaction(BaseModel):
+    amount: float
+    merchant_id: str
+    timestamp: str
+
+@app.post("/predict")
+async def predict_fraud(tx: Transaction):
+    features = preprocess(tx)
+    prediction = model.predict(features)
+    return {"fraud_probability": float(prediction[0])}`
+            },
+            {
+                id: 4, title: "Learning Management System", description: "Platform pembelajaran online dengan video streaming, quiz interaktif, dan progress tracking.",
+                image: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=600&h=400&fit=crop",
+                tech: ["Next.js", "Prisma", "AWS S3", "CloudFront", "Redis"],
+                features: ["Video streaming dengan HLS", "Interactive quiz builder", "Certificate generation", "Progress tracking & analytics"],
+                code: `// Video streaming dengan HLS
+import { Mux } from '@mux/mux-node';
+const mux = new Mux(process.env.MUX_TOKEN_ID, process.env.MUX_TOKEN_SECRET);
+
+export async function uploadVideo(file) {
+  const asset = await mux.video.assets.create({
+    input: file.url,
+    playback_policy: ['public'],
+  });
+  return { playbackId: asset.playback_ids[0].id };
+}`
+            },
+            {
+                id: 5, title: "Social Media Analytics", description: "Tool analisis social media dengan sentiment analysis dan competitor tracking.",
+                image: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=600&h=400&fit=crop",
+                tech: ["React", "Go", "PostgreSQL", "RabbitMQ", "Elasticsearch"],
+                features: ["Sentiment analysis dengan NLP", "Competitor benchmarking", "Hashtag trending analysis", "Automated report scheduling"],
+                code: `// Go worker untuk process tweets
+func ProcessTweets(tweets []Tweet) SentimentResult {
+    results := make(chan Sentiment, len(tweets))
+    var wg sync.WaitGroup
+    
+    for _, tweet := range tweets {
+        wg.Add(1)
+        go func(t Tweet) {
+            defer wg.Done()
+            score := nlp.AnalyzeSentiment(t.Text)
+            results <- Sentiment{TweetID: t.ID, Score: score}
+        }(tweet)
+    }
+    return aggregateResults(results)
+}`
+            },
+            {
+                id: 6, title: "IoT Monitoring Dashboard", description: "Dashboard monitoring untuk perangkat IoT dengan real-time alerts dan data visualization.",
+                image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&h=400&fit=crop",
+                tech: ["React", "Node.js", "InfluxDB", "MQTT", "Grafana"],
+                features: ["Real-time device monitoring", "Custom alert thresholds", "Historical data analysis", "Device management panel"],
+                code: `// MQTT subscriber untuk IoT data
+import mqtt from 'mqtt';
+const client = mqtt.connect('mqtt://broker.hivemq.com');
+
+client.on('connect', () => client.subscribe('sensors/+/data'));
+
+client.on('message', async (topic, message) => {
+  const data = JSON.parse(message.toString());
+  await influx.writePoints([{
+    measurement: 'sensor_data',
+    tags: { device_id: topic.split('/')[1] },
+    fields: { temperature: data.temp, humidity: data.humidity },
+    timestamp: new Date(),
+  }]);
+});`
+            }
+        ];
+
+        const testimonials = [
+            { id: 1, name: "Ahmad Wijaya", role: "CEO, TechStartup Indonesia", avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face", message: "BaguzAe adalah developer yang sangat profesional. Proyek kami selesai tepat waktu dengan kualitas yang luar biasa. Sangat merekomendasikan!", rating: 5 },
+            { id: 2, name: "Selfana Maulida", role: "Product Manager, E-Commerce Co", avatar: "https://baguzae.github.io/ntah/potoelva.jpeg", message: "Kerjasama dengan BaguzAe sangat menyenangkan. Beliau sangat responsif dan selalu memberikan solusi terbaik untuk setiap masalah teknis.", rating: 5 },
+            { id: 3, name: "Budi Santoso", role: "CTO, FinTech Startup", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face", message: "Kualitas kode yang ditulis BaguzAe sangat bersih dan maintainable. Arsitektur yang dibangun sangat scalable untuk pertumbuhan bisnis kami.", rating: 5 },
+            { id: 4, name: "Firstiana Pratiwi", role: "Founder, HealthTech ID", avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face", message: "Aplikasi telemedicine yang dibangun BaguzAe membantu banyak pasien. Fitur video call-nya sangat smooth dan reliable.", rating: 5 },
+            { id: 5, name: "Rudi Hermawan", role: "IT Director, Manufacturing Corp", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=face", message: "Dashboard IoT yang dibuat sangat membantu operasional pabrik kami. Real-time monitoring bekerja dengan sempurna.", rating: 5 },
+            { id: 6, name: "Maya Sari", role: "Marketing Director, Retail Co", avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop&crop=face", message: "Platform e-commerce yang dibangun meningkatkan penjualan online kami hingga 300%. UI/UX-nya sangat user-friendly.", rating: 5 },
+            { id: 7, name: "Hendri Tanaka", role: "Startup Founder", avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&h=100&fit=crop&crop=face", message: "Dari semua freelancer yang pernah saya kerjakan, BaguzAe adalah yang paling reliable. Teknis kuat, komunikasi bagus.", rating: 5 },
+            { id: 8, name: "Linda Chen", role: "Operations Head, Logistics Co", avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=face", message: "Sistem tracking yang dibangun BaguzAe sangat akurat. Integration dengan GPS dan mapping berjalan sempurna.", rating: 5 },
+            { id: 9, name: "Agus Pratama", role: "Tech Lead, Banking Corp", avatar: "https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=100&h=100&fit=crop&crop=face", message: "Keamanan aplikasi yang dibangun BaguzAe sangat terjamin. Sudah melewati penetration testing dengan hasil yang memuaskan.", rating: 5 },
+            { id: 10, name: "Rina Melati", role: "Education Tech Lead", avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100&h=100&fit=crop&crop=face", message: "Platform LMS yang dibuat sangat membantu siswa-siswa kami. Video streaming-nya lancar bahkan di jaringan lambat.", rating: 5 }
+        ];
+
+        // ========== STATE ==========
+        let currentTestimonialIndex = 0;
+        let isPlaying = false;
+        let popupTimeout = null;
+        const bgMusic = document.getElementById('bgMusic');
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        // ========== INITIALIZATION ==========
+        document.addEventListener('DOMContentLoaded', () => {
+            renderProjects();
+            renderTestimonials();
+            renderSliderDots();
+            initScrollAnimations();
+            initCounterAnimations();
+            initParticles();
+            startPopupNotifications();
+            
+            if (!prefersReducedMotion) animateEntrance();
+            else document.querySelectorAll('.fade-up, .fade-in, .scale-in').forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; });
+        });
+
+        // ========== ENTRANCE ANIMATIONS ==========
+        function animateEntrance() {
+            if (typeof gsap !== 'undefined') {
+                gsap.to('.fade-up', { opacity: 1, y: 0, duration: 0.8, stagger: 0.1, ease: 'power3.out' });
+            } else {
+                document.querySelectorAll('.fade-up').forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; });
+            }
+        }
+
+        // ========== SCROLL ANIMATIONS ==========
+        function initScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const skillFills = entry.target.querySelectorAll('.skill-fill');
+                        skillFills.forEach(fill => {
+                            const width = fill.dataset.width;
+                            if (width) setTimeout(() => { fill.style.width = width + '%'; }, 200);
+                        });
+
+                        if (!prefersReducedMotion && typeof gsap !== 'undefined') {
+                            gsap.to(entry.target, { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: 'power2.out' });
+                        } else {
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transform = 'none';
+                        }
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.fade-up, .fade-in, .scale-in, .card-3d').forEach(el => { observer.observe(el); });
+        }
+
+        // ========== COUNTER ANIMATIONS ==========
+        function initCounterAnimations() {
+            const counters = document.querySelectorAll('.counter');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const target = parseInt(entry.target.dataset.target);
+                        animateCounter(entry.target, target);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+            counters.forEach(counter => observer.observe(counter));
+        }
+
+        function animateCounter(element, target) {
+            let current = 0;
+            const increment = target / 50;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) { element.textContent = target + '+'; clearInterval(timer); }
+                else element.textContent = Math.floor(current);
+            }, 30);
+        }
+
+        // ========== PARTICLES ==========
+        function initParticles() {
+            const container = document.getElementById('particles');
+            if (!container) return;
+            const colors = ['#f59e0b', '#14b8a6', '#ea580c'];
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                const size = Math.random() * 10 + 5;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 3 + 's';
+                particle.style.animationDuration = Math.random() * 5 + 5 + 's';
+                container.appendChild(particle);
+            }
+        }
+
+        // ========== RENDER PROJECTS ==========
+        function renderProjects() {
+            const grid = document.getElementById('projectsGrid');
+            if (!grid) return;
+            grid.innerHTML = projects.map((project, index) => `
+                <div class="card-3d bg-[var(--card)] rounded-2xl overflow-hidden border border-[var(--border)] fade-up project-card cursor-pointer" style="transition-delay: ${index * 0.1}s" onclick="openProjectModal(${project.id})">
+                    <div class="relative overflow-hidden h-48">
+                        <img src="${project.image}" alt="${project.title}" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[var(--card)] to-transparent opacity-60"></div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-display text-lg font-bold mb-2">${project.title}</h3>
+                        <p class="text-[var(--fg-muted)] text-sm mb-4 line-clamp-2">${project.description}</p>
+                        <div class="flex flex-wrap gap-2">
+                            ${project.tech.slice(0, 3).map(t => `<span class="tech-badge">${t}</span>`).join('')}
+                            ${project.tech.length > 3 ? `<span class="tech-badge">+${project.tech.length - 3}</span>` : ''}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ========== RENDER TESTIMONIALS ==========
+        function renderTestimonials() {
+            const slider = document.getElementById('testimonialSlider');
+            if (!slider) return;
+            slider.innerHTML = testimonials.map(t => `
+                <div class="testimonial-slide">
+                    <div class="card-3d bg-[var(--card)] rounded-2xl p-6 border border-[var(--border)] h-full ripple" onclick="createRipple(event)">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="avatar-ring"><img src="${t.avatar}" alt="${t.name}" class="w-14 h-14 rounded-full object-cover"></div>
+                            <div><h4 class="font-semibold">${t.name}</h4><p class="text-[var(--fg-muted)] text-sm">${t.role}</p></div>
+                        </div>
+                        <div class="flex gap-1 mb-4">${Array(t.rating).fill('<svg class="w-4 h-4 text-[var(--accent)]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>').join('')}</div>
+                        <p class="text-[var(--fg-muted)] text-sm leading-relaxed">"${t.message}"</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ========== SLIDER DOTS ==========
+        function renderSliderDots() {
+            const dotsContainer = document.getElementById('sliderDots');
+            if (!dotsContainer) return;
+            const totalSlides = Math.ceil(testimonials.length / getVisibleSlides());
+            dotsContainer.innerHTML = Array(totalSlides).fill(0).map((_, i) => `<button class="slider-dot ${i === 0 ? 'active' : ''}" onclick="goToSlide(${i})" aria-label="Go to slide ${i + 1}"></button>`).join('');
+        }
+
+        function getVisibleSlides() {
+            if (window.innerWidth >= 1024) return 3;
+            if (window.innerWidth >= 768) return 2;
+            return 1;
+        }
+
+        function slideTestimonials(direction) {
+            const slider = document.getElementById('testimonialSlider');
+            if (!slider) return;
+            const visibleSlides = getVisibleSlides();
+            const maxIndex = Math.ceil(testimonials.length / visibleSlides) - 1;
+            currentTestimonialIndex += direction;
+            if (currentTestimonialIndex < 0) currentTestimonialIndex = maxIndex;
+            if (currentTestimonialIndex > maxIndex) currentTestimonialIndex = 0;
+            const slideWidth = 100 / visibleSlides;
+            slider.style.transform = `translateX(-${currentTestimonialIndex * slideWidth * visibleSlides}%)`;
+            updateSliderDots();
+        }
+
+        function goToSlide(index) {
+            const slider = document.getElementById('testimonialSlider');
+            if (!slider) return;
+            currentTestimonialIndex = index;
+            const visibleSlides = getVisibleSlides();
+            const slideWidth = 100 / visibleSlides;
+            slider.style.transform = `translateX(-${index * slideWidth * visibleSlides}%)`;
+            updateSliderDots();
+        }
+
+        function updateSliderDots() {
+            const dots = document.querySelectorAll('.slider-dot');
+            dots.forEach((dot, i) => { dot.classList.toggle('active', i === currentTestimonialIndex); });
+        }
+
+        // ========== THEME TOGGLE ==========
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        }
+        
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
+
+        // ========== MOBILE MENU ==========
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            if (menu) menu.classList.toggle('hidden');
+        }
+
+        // ========== MUSIC PLAYER ==========
+        function toggleMusic() {
+            const playIcon = document.getElementById('playIcon');
+            const pauseIcon = document.getElementById('pauseIcon');
+            if (!playIcon || !pauseIcon || !bgMusic) return;
+            if (isPlaying) { bgMusic.pause(); playIcon.classList.remove('hidden'); pauseIcon.classList.add('hidden'); }
+            else { bgMusic.play().catch(e => console.log('Audio play failed:', e)); playIcon.classList.add('hidden'); pauseIcon.classList.remove('hidden'); }
+            isPlaying = !isPlaying;
+        }
+
+        function seekMusic(event) {
+            if (!bgMusic || !bgMusic.duration) return;
+            const rect = event.currentTarget.getBoundingClientRect();
+            const percent = (event.clientX - rect.left) / rect.width;
+            bgMusic.currentTime = percent * bgMusic.duration;
+        }
+
+        if (bgMusic) {
+            bgMusic.addEventListener('timeupdate', () => {
+                const progress = document.getElementById('musicProgress');
+                if (progress && bgMusic.duration) progress.style.width = (bgMusic.currentTime / bgMusic.duration * 100) + '%';
+            });
+        }
+
+        function openMusicModal() {
+            const modal = document.getElementById('musicModal');
+            if (modal) { modal.classList.add('active'); document.body.classList.add('modal-open'); }
+        }
+
+        function closeMusicModal() {
+            const modal = document.getElementById('musicModal');
+            if (modal) { modal.classList.remove('active'); document.body.classList.remove('modal-open'); }
+        }
+
+        function changeMusic() {
+            const urlInput = document.getElementById('musicUrlInput');
+            const titleInput = document.getElementById('musicTitleInput');
+            const musicTitle = document.getElementById('musicTitle');
+            if (!urlInput || !bgMusic) return;
+            if (urlInput.value) {
+                bgMusic.src = urlInput.value;
+                if (musicTitle && titleInput.value) musicTitle.textContent = titleInput.value;
+                if (isPlaying) bgMusic.play().catch(e => console.log('Audio play failed:', e));
+            }
+            closeMusicModal();
+        }
+
+        // ========== POPUP NOTIFICATIONS ==========
+        function startPopupNotifications() {
+            showRandomPopup();
+            setInterval(showRandomPopup, 15000);
+        }
+
+        function showRandomPopup() {
+            const popup = document.getElementById('popupNotification');
+            const popupAvatar = document.getElementById('popupAvatar');
+            const popupName = document.getElementById('popupName');
+            const popupMessage = document.getElementById('popupMessage');
+            if (!popup || !popupAvatar || !popupName || !popupMessage) return;
+            const randomTestimonial = testimonials[Math.floor(Math.random() * testimonials.length)];
+            popupAvatar.src = randomTestimonial.avatar;
+            popupAvatar.alt = randomTestimonial.name;
+            popupName.textContent = randomTestimonial.name;
+            popupMessage.textContent = randomTestimonial.message.substring(0, 50) + '...';
+            popup.classList.add('show');
+            if (popupTimeout) clearTimeout(popupTimeout);
+            popupTimeout = setTimeout(() => { closePopup(); }, 5000);
+        }
+
+        function closePopup() {
+            const popup = document.getElementById('popupNotification');
+            if (popup) popup.classList.remove('show');
+        }
+
+        // ========== FIX: PROJECT MODAL FUNCTIONS ==========
+        function openProjectModal(id) {
+            const project = projects.find(p => p.id === id);
+            if (!project) return;
+            
+            const modal = document.getElementById('projectModal');
+            const modalTitle = document.getElementById('modalProjectTitle');
+            const modalImage = document.getElementById('modalProjectImage');
+            const modalDesc = document.getElementById('modalProjectDesc');
+            const modalTech = document.getElementById('modalProjectTech');
+            const modalFeatures = document.getElementById('modalProjectFeatures');
+            const modalCode = document.getElementById('modalProjectCode');
+            
+            if (!modal || !modalTitle || !modalImage || !modalDesc || !modalTech || !modalFeatures || !modalCode) return;
+            
+            modalTitle.textContent = project.title;
+            modalImage.src = project.image;
+            modalImage.alt = project.title;
+            modalDesc.textContent = project.description;
+            modalTech.innerHTML = project.tech.map(t => `<span class="tech-badge">${t}</span>`).join('');
+            modalFeatures.innerHTML = project.features.map(f => `<li class="flex items-start gap-2 text-[var(--fg-muted)] text-sm"><svg class="w-4 h-4 text-[var(--accent)] mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg><span>${f}</span></li>`).join('');
+            modalCode.textContent = project.code;
+            
+            modal.classList.add('active');
+            document.body.classList.add('modal-open');
+        }
+
+        function closeProjectModal() {
+            const modal = document.getElementById('projectModal');
+            if (modal) modal.classList.remove('active');
+            document.body.classList.remove('modal-open');
+        }
+
+        // ========== RIPPLE EFFECT ==========
+        function createRipple(event) {
+            const element = event.currentTarget;
+            const rect = element.getBoundingClientRect();
+            const ripple = document.createElement('span');
+            ripple.className = 'ripple-effect';
+            ripple.style.left = (event.clientX - rect.left) + 'px';
+            ripple.style.top = (event.clientY - rect.top) + 'px';
+            ripple.style.width = ripple.style.height = Math.max(rect.width, rect.height) + 'px';
+            element.appendChild(ripple);
+            setTimeout(() => ripple.remove(), 600);
+        }
+
+        // ========== 3D ANIMATIONS ==========
+        function animateSkillCard(element) {
+            if (prefersReducedMotion || typeof gsap === 'undefined') return;
+            gsap.to(element, { rotateY: 5, rotateX: -5, scale: 1.02, duration: 0.3, yoyo: true, repeat: 1, ease: 'elastic.out(1, 0.5)' });
+        }
+
+        // ========== CONTACT FORM ==========
+        const contactForm = document.getElementById('contactForm');
+        if (contactForm) {
+            contactForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const btn = contactForm.querySelector('button[type="submit"]');
+                if (btn) {
+                    const originalText = btn.textContent;
+                    btn.textContent = 'Pesan Terkirim!';
+                    btn.disabled = true;
+                    setTimeout(() => { btn.textContent = originalText; btn.disabled = false; contactForm.reset(); }, 2000);
+                }
+            });
+        }
+
+        // ========== CLOSE MODALS ON OUTSIDE CLICK ==========
+        document.querySelectorAll('.modal-overlay').forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                    document.body.classList.remove('modal-open');
+                }
+            });
+        });
+
+        // ========== KEYBOARD NAVIGATION ==========
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal-overlay').forEach(modal => modal.classList.remove('active'));
+                document.body.classList.remove('modal-open');
+            }
+        });
+
+        // ========== SMOOTH SCROLL FOR NAV LINKS ==========
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'start' });
+                    const mobileMenu = document.getElementById('mobileMenu');
+                    if (mobileMenu && !mobileMenu.classList.contains('hidden')) mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+
+        // ========== ACTIVE NAV LINK ON SCROLL ==========
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const navObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    navLinks.forEach(link => { link.classList.toggle('active', link.getAttribute('href') === '#' + entry.target.id); });
+                }
+            });
+        }, { threshold: 0.3 });
+        sections.forEach(section => navObserver.observe(section));
+
+        // ========== WINDOW RESIZE ==========
+        window.addEventListener('resize', () => { renderSliderDots(); goToSlide(0); });
+    </script>
+</body>
+</html>

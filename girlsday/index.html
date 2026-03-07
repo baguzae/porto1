@@ -1,0 +1,1337 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baguz ❤ Elvaa</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Dark Mode (Default) */
+            --bg-deep: #0d0a0b;
+            --bg-card: #1a1517;
+            --bg-secondary: #2a2225;
+            --rose: #c9a0a0;
+            --rose-gold: #b76e79;
+            --gold: #d4af37;
+            --cream: #f5e6e0;
+            --blush: #8b5a5a;
+            --text-primary: #f5e6e0;
+            --text-secondary: #c9a0a0;
+            --text-muted: #9a7a7a;
+            --border-color: rgba(183, 110, 121, 0.3);
+            --glow-color: rgba(183, 110, 121, 0.5);
+            --overlay-bg: rgba(26, 21, 23, 0.95);
+            --nav-bg: rgba(26, 21, 23, 0.8);
+            
+            /* Letter specific colors - DARK MODE */
+            --letter-bg: #1a1517;
+            --letter-text: #ffffff;
+            --letter-text-secondary: #e8d0d0;
+            --letter-text-gold: #f0c850;
+        }
+
+        [data-theme="light"] {
+            --bg-deep: #fdf8f6;
+            --bg-card: #ffffff;
+            --bg-secondary: #f9f1ef;
+            --rose: #9e5a5a;
+            --rose-gold: #a85a6b;
+            --gold: #b8960b;
+            --cream: #1a1214;
+            --blush: #d4a0a0;
+            --text-primary: #1a1214;
+            --text-secondary: #5a3a3a;
+            --text-muted: #8a6a6a;
+            --border-color: rgba(168, 90, 107, 0.25);
+            --glow-color: rgba(168, 90, 107, 0.3);
+            --overlay-bg: rgba(253, 248, 246, 0.95);
+            --nav-bg: rgba(253, 248, 246, 0.85);
+            
+            /* Letter specific colors - LIGHT MODE */
+            --letter-bg: #ffffff;
+            --letter-text: #1a1214;
+            --letter-text-secondary: #5a3a3a;
+            --letter-text-gold: #8a6a0b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-deep);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            transition: background 0.5s ease, color 0.5s ease;
+        }
+
+        .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Floating Hearts Background */
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .heart {
+            position: absolute;
+            opacity: 0.6;
+            animation: floatHeart linear infinite;
+            filter: blur(0.5px);
+        }
+
+        @keyframes floatHeart {
+            0% {
+                transform: translateY(100vh) rotate(0deg) scale(0.5);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg) scale(1);
+                opacity: 0;
+            }
+        }
+
+        /* Sparkle Effect */
+        .sparkle {
+            position: fixed;
+            pointer-events: none;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--gold);
+            animation: sparkleAnim 0.8s ease-out forwards;
+            z-index: 9999;
+        }
+
+        @keyframes sparkleAnim {
+            0% {
+                transform: scale(0) rotate(0deg);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.5) rotate(180deg);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(0) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Heart Burst on Click */
+        .heart-burst {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            animation: heartBurst 1s ease-out forwards;
+        }
+
+        @keyframes heartBurst {
+            0% {
+                transform: scale(0) rotate(0deg);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1) rotate(15deg);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(1.5) rotate(-10deg);
+                opacity: 0;
+            }
+        }
+
+        /* Navigation */
+        .nav-menu {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            background: var(--nav-bg);
+            border-bottom: 1px solid var(--border-color);
+            transition: all 0.5s ease;
+        }
+
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+            color: var(--text-secondary);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--rose-gold), var(--gold));
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-link:hover {
+            color: var(--rose-gold);
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            width: 60px;
+            height: 30px;
+            border-radius: 15px;
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            position: relative;
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+
+        .theme-toggle::before {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--rose-gold), var(--gold));
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        [data-theme="light"] .theme-toggle::before {
+            transform: translateX(30px);
+        }
+
+        .theme-toggle .icon {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle .moon {
+            left: 5px;
+            opacity: 1;
+        }
+
+        .theme-toggle .sun {
+            right: 5px;
+            opacity: 0.5;
+        }
+
+        [data-theme="light"] .theme-toggle .moon {
+            opacity: 0.5;
+        }
+
+        [data-theme="light"] .theme-toggle .sun {
+            opacity: 1;
+        }
+
+        /* Music Player */
+        .music-player {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 50px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s ease;
+        }
+
+        .music-player:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        .music-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--rose-gold), var(--blush));
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(183, 110, 121, 0.4);
+        }
+
+        .music-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(183, 110, 121, 0.5);
+        }
+
+        .music-btn:active {
+            transform: scale(0.95);
+        }
+
+        .music-btn svg {
+            color: #ffffff;
+            width: 24px;
+            height: 24px;
+        }
+
+        .music-info {
+            display: flex;
+            flex-direction: column;
+            max-width: 150px;
+        }
+
+        .music-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .music-status {
+            font-size: 10px;
+            color: var(--text-muted);
+        }
+
+        .music-visualizer {
+            display: flex;
+            align-items: flex-end;
+            gap: 2px;
+            height: 20px;
+        }
+
+        .music-bar {
+            width: 3px;
+            background: linear-gradient(to top, var(--rose-gold), var(--gold));
+            border-radius: 2px;
+            animation: musicBar 0.5s ease infinite alternate;
+        }
+
+        .music-bar:nth-child(1) { height: 8px; animation-delay: 0s; }
+        .music-bar:nth-child(2) { height: 15px; animation-delay: 0.1s; }
+        .music-bar:nth-child(3) { height: 10px; animation-delay: 0.2s; }
+        .music-bar:nth-child(4) { height: 18px; animation-delay: 0.3s; }
+        .music-bar:nth-child(5) { height: 12px; animation-delay: 0.4s; }
+
+        @keyframes musicBar {
+            0% { transform: scaleY(0.5); }
+            100% { transform: scaleY(1); }
+        }
+
+        .music-visualizer.paused .music-bar {
+            animation-play-state: paused;
+            height: 5px;
+        }
+
+        /* Hero Section */
+        .hero-bg {
+            background: 
+                radial-gradient(ellipse at 20% 80%, rgba(183, 110, 121, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(139, 90, 90, 0.1) 0%, transparent 70%),
+                var(--bg-deep);
+            transition: background 0.5s ease;
+        }
+
+        .glow-text {
+            text-shadow: 0 0 40px var(--glow-color);
+        }
+
+        [data-theme="light"] .glow-text {
+            text-shadow: 0 2px 20px rgba(168, 90, 107, 0.2);
+        }
+
+        /* Love Card */
+        .love-card {
+            background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-secondary) 100%);
+            border: 1px solid var(--border-color);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .love-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: var(--rose-gold);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.2),
+                0 0 30px var(--glow-color),
+                inset 0 0 30px rgba(183, 110, 121, 0.03);
+        }
+
+        /* Love Letter - PERBAIKAN */
+        .love-letter {
+            background: var(--letter-bg);
+            border: 2px solid var(--border-color);
+            position: relative;
+            transition: all 0.4s ease;
+        }
+
+        .love-letter::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(135deg, var(--rose-gold), var(--gold), var(--rose-gold));
+            border-radius: inherit;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .love-letter:hover::before {
+            opacity: 1;
+        }
+
+        .letter-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .letter-content.open {
+            max-height: 800px;
+        }
+
+        /* Letter Text Styles - PERBAIKAN */
+        .letter-title {
+            color: var(--letter-text);
+            font-weight: 700;
+        }
+
+        .letter-subtitle {
+            color: var(--letter-text-secondary);
+        }
+
+        .letter-heading {
+            color: var(--letter-text);
+        }
+
+        .letter-body {
+            color: var(--letter-text-secondary);
+        }
+
+        .letter-signature {
+            color: var(--letter-text-gold);
+        }
+
+        .letter-border {
+            border-color: var(--border-color);
+        }
+
+        /* Gallery Styles - PERBAIKAN */
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.02);
+            z-index: 10;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--blush), var(--rose-gold));
+        }
+
+        .gallery-placeholder span {
+            color: #ffffff;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Button Styles */
+        .btn-romantic {
+            background: linear-gradient(135deg, var(--rose-gold) 0%, var(--blush) 100%);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .btn-romantic::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+
+        .btn-romantic:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-romantic:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(183, 110, 121, 0.4);
+        }
+
+        .btn-romantic:active {
+            transform: scale(0.95);
+        }
+
+        /* Love Meter */
+        .love-meter {
+            background: linear-gradient(90deg, var(--blush), var(--rose-gold), var(--gold));
+            background-size: 200% 100%;
+            animation: shimmer 3s ease infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Scroll Reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Floating Animation */
+        .float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Heart Beat */
+        .heartbeat {
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            14% { transform: scale(1.1); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.1); }
+            70% { transform: scale(1); }
+        }
+
+        /* Section Backgrounds */
+        .section-dark {
+            background: linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-card) 100%);
+            transition: background 0.5s ease;
+        }
+
+        .section-card {
+            background: var(--bg-card);
+            transition: background 0.5s ease;
+        }
+
+        /* Decorative Orbs */
+        .orb {
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.3;
+            transition: opacity 0.5s ease;
+        }
+
+        [data-theme="light"] .orb {
+            opacity: 0.2;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-deep);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--blush);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--rose-gold);
+        }
+
+        /* Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 640px) {
+            .music-player {
+                bottom: 10px;
+                right: 10px;
+                padding: 10px 12px;
+            }
+
+            .music-info {
+                display: none;
+            }
+
+            .music-btn {
+                width: 45px;
+                height: 45px;
+            }
+
+            .gallery-placeholder span {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Hearts Background -->
+    <div class="floating-hearts" id="floatingHearts"></div>
+
+    <!-- Navigation -->
+    <nav class="nav-menu fixed top-0 left-0 right-0 z-50 py-4 px-6">
+        <div class="max-w-6xl mx-auto flex items-center justify-between">
+            <a href="#hero" class="font-display text-2xl font-bold" style="color: var(--rose-gold);">
+                Baguz ❤ Elvaa
+            </a>
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#hero" class="nav-link text-sm font-medium">Beranda</a>
+                <a href="#ucapan" class="nav-link text-sm font-medium">Ucapan</a>
+                <a href="#surat" class="nav-link text-sm font-medium">Surat Cinta</a>
+                <a href="#gallery" class="nav-link text-sm font-medium">Galeri</a>
+                <a href="#final" class="nav-link text-sm font-medium">Spesial</a>
+                
+                <!-- Theme Toggle -->
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <svg class="icon moon" viewBox="0 0 24 24" fill="currentColor" style="color: var(--cream);">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
+                    <svg class="icon sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--gold);">
+                        <circle cx="12" cy="12" r="5"/>
+                        <line x1="12" y1="1" x2="12" y2="3"/>
+                        <line x1="12" y1="21" x2="12" y2="23"/>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                        <line x1="1" y1="12" x2="3" y2="12"/>
+                        <line x1="21" y1="12" x2="23" y2="12"/>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="flex items-center gap-4 md:hidden">
+                <!-- Mobile Theme Toggle -->
+                <button class="theme-toggle" id="themeToggleMobile" aria-label="Toggle theme" style="width: 50px; height: 26px;">
+                    <svg class="icon moon" viewBox="0 0 24 24" fill="currentColor" style="color: var(--cream); width: 14px; height: 14px; left: 4px;">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
+                    <svg class="icon sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--gold); width: 14px; height: 14px; right: 4px;">
+                        <circle cx="12" cy="12" r="5"/>
+                        <line x1="12" y1="1" x2="12" y2="3"/>
+                        <line x1="12" y1="21" x2="12" y2="23"/>
+                    </svg>
+                </button>
+                <button id="mobileMenuBtn" class="p-2" aria-label="Menu" style="color: var(--text-primary);">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="md:hidden hidden absolute top-full left-0 right-0 py-4 px-6" style="background: var(--overlay-bg);">
+            <div class="flex flex-col gap-4">
+                <a href="#hero" class="nav-link text-sm font-medium py-2">Beranda</a>
+                <a href="#ucapan" class="nav-link text-sm font-medium py-2">Ucapan</a>
+                <a href="#surat" class="nav-link text-sm font-medium py-2">Surat Cinta</a>
+                <a href="#gallery" class="nav-link text-sm font-medium py-2">Galeri</a>
+                <a href="#final" class="nav-link text-sm font-medium py-2">Spesial</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero-bg min-h-screen flex items-center justify-center relative px-6 pt-20">
+        <div class="max-w-4xl mx-auto text-center relative z-10">
+            <div class="float mb-8">
+                <svg class="w-20 h-20 mx-auto heartbeat" viewBox="0 0 24 24" fill="none" style="color: var(--rose-gold);">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" fill="currentColor"/>
+                </svg>
+            </div>
+            
+            <p class="text-sm tracking-widest mb-4 reveal" style="color: var(--text-secondary);">HARI PEREMPUAN SEDUNIA</p>
+            
+            <h1 class="font-display text-5xl md:text-7xl lg:text-8xl font-bold mb-6 glow-text reveal" style="color: var(--text-primary);">
+                Untukmu<br>
+                <span style="color: var(--rose-gold);">Dde Elvaa</span>
+            </h1>
+            
+            <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto reveal" style="color: var(--text-secondary);">
+                Di hari istimewa ini, izinkan aku mengungkapkan betapa berartinya dirimu dalam hidupku. Kamu adalah bintang yang menerangi malamku, dan matahari yang menghangatkan hariku.
+            </p>
+            
+            <div class="reveal">
+                <button onclick="scrollToSection('ucapan')" class="btn-romantic px-8 py-4 rounded-full font-semibold text-lg" style="color: #ffffff;">
+                    Baca Ucapanku
+                </button>
+            </div>
+            
+            <div class="mt-16 reveal">
+                <p class="text-sm mb-2" style="color: var(--text-muted);">Love Meter untuk Dde Elvaa</p>
+                <div class="w-64 h-3 mx-auto rounded-full overflow-hidden" style="background: var(--bg-card);">
+                    <div class="love-meter h-full rounded-full" style="width: 100%;"></div>
+                </div>
+                <p class="text-2xl font-display font-bold mt-2" style="color: var(--gold);">Infinity%</p>
+            </div>
+        </div>
+        
+        <!-- Decorative Elements -->
+        <div class="orb absolute top-1/4 left-10 w-32 h-32" style="background: var(--rose-gold);"></div>
+        <div class="orb absolute bottom-1/4 right-10 w-40 h-40" style="background: var(--gold);"></div>
+    </section>
+
+    <!-- Ucapan Section -->
+    <section id="ucapan" class="section-dark py-24 px-6 relative">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <p class="text-sm tracking-widest mb-4 reveal" style="color: var(--text-secondary);">UCAPAN SPESIAL</p>
+                <h2 class="font-display text-4xl md:text-5xl font-bold reveal" style="color: var(--text-primary);">
+                    Untuk <span style="color: var(--rose-gold);">Dde Elvaa</span>
+                </h2>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Card 1 -->
+                <div class="love-card rounded-2xl p-8 reveal" onclick="createHeartBurst(event)">
+                    <div class="w-14 h-14 rounded-full flex items-center justify-center mb-6" style="background: linear-gradient(135deg, var(--rose-gold), var(--blush));">
+                        <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2">
+                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-xl font-bold mb-4" style="color: var(--text-primary);">Kamu Luar Biasa, Dde Elvaa</h3>
+                    <p class="leading-relaxed" style="color: var(--text-secondary);">
+                        Di hari perempuan sedunia ini, aku ingin mengingatkanmu bahwa kamu adalah wanita yang luar biasa. Kekuatanmu menginspirasi, kelembutanmu menenangkan, dan kehadiranmu adalah anugerah terindah dalam hidupku.
+                    </p>
+                </div>
+                
+                <!-- Card 2 -->
+                <div class="love-card rounded-2xl p-8 reveal" onclick="createHeartBurst(event)">
+                    <div class="w-14 h-14 rounded-full flex items-center justify-center mb-6" style="background: linear-gradient(135deg, var(--gold), var(--rose-gold));">
+                        <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2">
+                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-xl font-bold mb-4" style="color: var(--text-primary);">Bintang Hatiku</h3>
+                    <p class="leading-relaxed" style="color: var(--text-secondary);">
+                        Setiap wanita adalah bintang, tapi Dde Elvaa adalah bintang yang paling terang di langit hatiku. Terima kasih sudah menjadi wanita yang menemani perjalananku, mewarnai hariku dengan senyummu yang manis.
+                    </p>
+                </div>
+                
+                <!-- Card 3 -->
+                <div class="love-card rounded-2xl p-8 reveal" onclick="createHeartBurst(event)">
+                    <div class="w-14 h-14 rounded-full flex items-center justify-center mb-6" style="background: linear-gradient(135deg, var(--blush), var(--rose-gold));">
+                        <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                            <line x1="9" y1="9" x2="9.01" y2="9"/>
+                            <line x1="15" y1="9" x2="15.01" y2="9"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-xl font-bold mb-4" style="color: var(--text-primary);">Senyummu Penenang</h3>
+                    <p class="leading-relaxed" style="color: var(--text-secondary);">
+                        Di antara jutaan wanita di dunia ini, Dde Elvaa adalah satu-satunya yang berhasil mencuri hatiku dengan sekali senyum. Senyummu adalah obat penenang segala gelisah, dan tawamu adalah melodi terindah.
+                    </p>
+                </div>
+                
+                <!-- Card 4 -->
+                <div class="love-card rounded-2xl p-8 reveal" onclick="createHeartBurst(event)">
+                    <div class="w-14 h-14 rounded-full flex items-center justify-center mb-6" style="background: linear-gradient(135deg, var(--rose-gold), var(--gold));">
+                        <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-xl font-bold mb-4" style="color: var(--text-primary);">Keajaiban Kecilku</h3>
+                    <p class="leading-relaxed" style="color: var(--text-secondary);">
+                        Dde Elvaa adalah keajaiban kecil yang membuat hidupku berarti. Setiap detik bersamamu adalah hadiah, setiap tawa kita adalah kenangan indah yang akan kusimpan selamanya di relung hati.
+                    </p>
+                </div>
+                
+                <!-- Card 5 -->
+                <div class="love-card rounded-2xl p-8 reveal" onclick="createHeartBurst(event)">
+                    <div class="w-14 h-14 rounded-full flex items-center justify-center mb-6" style="background: linear-gradient(135deg, var(--gold), var(--blush));">
+                        <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2">
+                            <path d="M12 3v18"/>
+                            <path d="M18.5 8.5c-3.5-3.5-9-3.5-12.5 0"/>
+                            <path d="M18.5 15.5c-3.5 3.5-9 3.5-12.5 0"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-xl font-bold mb-4" style="color: var(--text-primary);">Bunga Indah</h3>
+                    <p class="leading-relaxed" style="color: var(--text-secondary);">
+                        Bagiku, Dde Elvaa adalah bunga yang paling indah di taman hatiku. Aku berjanji akan selalu menjaga, merawat, dan menyayangimu dengan segenap cinta yang aku miliki, hari ini dan selamanya.
+                    </p>
+                </div>
+                
+                <!-- Card 6 -->
+                <div class="love-card rounded-2xl p-8 reveal" onclick="createHeartBurst(event)">
+                    <div class="w-14 h-14 rounded-full flex items-center justify-center mb-6" style="background: linear-gradient(135deg, var(--blush), var(--gold));">
+                        <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-xl font-bold mb-4" style="color: var(--text-primary);">Selamanya Milikmu</h3>
+                    <p class="leading-relaxed" style="color: var(--text-secondary);">
+                        Waktu berlalu, tahun berganti, tapi perasaanku untuk Dde Elvaa tidak akan pernah berubah. Kamu adalah rumah bagi hatiku, tempat aku selalu ingin kembali, sekarang dan selamanya.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Surat Cinta Section -->
+    <section id="surat" class="py-24 px-6 relative" style="background: var(--bg-deep);">
+        <div class="max-w-3xl mx-auto">
+            <div class="text-center mb-16">
+                <p class="text-sm tracking-widest mb-4 reveal" style="color: var(--text-secondary);">SURAT CINTA</p>
+                <h2 class="font-display text-4xl md:text-5xl font-bold reveal" style="color: var(--text-primary);">
+                    Selembar <span style="color: var(--rose-gold);">Hatiku</span>
+                </h2>
+            </div>
+            
+            <div class="love-letter rounded-3xl p-8 md:p-12 reveal">
+                <div class="flex items-center justify-between cursor-pointer" id="letterToggle">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full flex items-center justify-center heartbeat" style="background: linear-gradient(135deg, var(--rose-gold), var(--blush));">
+                            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="#ffffff">
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="font-display text-xl letter-title">Klik untuk membuka</h3>
+                            <p class="text-sm letter-subtitle">Surat cinta untuk Dde Elvaa</p>
+                        </div>
+                    </div>
+                    <svg id="letterArrow" class="w-6 h-6 transition-transform duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--rose-gold);">
+                        <polyline points="6 9 12 15 18 9"/>
+                    </svg>
+                </div>
+                
+                <div class="letter-content mt-8" id="letterContent">
+                    <div class="border-t pt-8 letter-border">
+                        <p class="font-display text-lg leading-loose mb-6 letter-heading">
+                            Untuk Dde Elvaa tersayang,
+                        </p>
+                        <p class="leading-loose mb-6 letter-body">
+                            Di hari perempuan sedunia ini, aku ingin mengucapkan terima kasih sudah menjadi bagian terindah dalam hidupku. Kamu mengajarkanku arti cinta yang sesungguhnya, cinta yang tulus tanpa pamrih.
+                        </p>
+                        <p class="leading-loose mb-6 letter-body">
+                            Setiap hari bersamamu adalah petualangan yang indah. Senyummu adalah matahari yang menerangi hariku, tawamu adalah musik yang menemani malamku. Kamu adalah alasan aku percaya pada keajaiban.
+                        </p>
+                        <p class="leading-loose mb-6 letter-body">
+                            Aku berjanji akan selalu menjagamu, mendukungmu, dan mencintaimu dengan segenap hatiku. Apapun yang terjadi, kamu akan selalu menjadi prioritas dalam hidupku.
+                        </p>
+                        <p class="leading-loose mb-6 letter-body">
+                            Selamat hari perempuan sedunia, Dde Elvaa sayang. Semoga di hari istimewa ini dan setiap hari setelahnya, kamu selalu merasa dicintai dan dihargai seperti yang kamu layak dapatkan.
+                        </p>
+                        <p class="font-display text-lg mt-8 letter-signature">
+                            Dengan segenap cinta,<br>
+                            <span class="font-bold">Yang selalu mencintai Dde Elvaa</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
+         GALERI KENANGAN - CARA GANTI FOTO:
+         ========================================
+         
+         Untuk mengganti foto, cari tag <img> di bawah ini:
+         
+         1. GANTI DENGAN FOTO LOKAL:
+            src="nama-foto.jpg"
+            src="folder/foto-kita.png"
+         
+         2. GANTI DENGAN URL ONLINE:
+            src="https://link-foto-anda.com/foto.jpg"
+         
+         3. GANTI DENGAN FOTO DARI HP:
+            - Taruh file HTML dan foto di folder yang sama
+            - Tulis src="foto.jpg"
+         
+         Ukuran rekomendasi: 400x400 pixel (kotak)
+         ======================================== -->
+    
+    <section id="gallery" class="section-dark py-24 px-6 relative">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <p class="text-sm tracking-widest mb-4 reveal" style="color: var(--text-secondary);">GALERI KENANGAN</p>
+                <h2 class="font-display text-4xl md:text-5xl font-bold reveal" style="color: var(--text-primary);">
+                    Momen <span style="color: var(--rose-gold);">Indah</span> Kita
+                </h2>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                
+                <!-- FOTO 1 - Ganti src dengan path foto kamu -->
+                <div class="gallery-item rounded-2xl overflow-hidden aspect-square reveal" onclick="createHeartBurst(event)">
+                    <img src="https://baguzae.github.io/ntah/foto1.png" 
+                         alt="Foto Dde Elvaa 1" 
+                         onerror="this.parentElement.innerHTML='<div class=\'gallery-placeholder\'><span>Foto 1</span></div>'">
+                    <div class="gallery-overlay">
+                        <span style="color: #ffffff; font-weight: 600;">Moment Pertama</span>
+                    </div>
+                </div>
+                
+                <!-- FOTO 2 - Ganti src dengan path foto kamu -->
+                <div class="gallery-item rounded-2xl overflow-hidden aspect-square reveal" onclick="createHeartBurst(event)">
+                    <img src="https://baguzae.github.io/ntah/foto2.png" 
+                         alt="Foto Dde Elvaa 2" 
+                         onerror="this.parentElement.innerHTML='<div class=\'gallery-placeholder\'><span>Foto 2</span></div>'">
+                    <div class="gallery-overlay">
+                        <span style="color: #ffffff; font-weight: 600;">Kenangan Indah</span>
+                    </div>
+                </div>
+                
+                <!-- FOTO 3 - Ganti src dengan path foto kamu -->
+                <div class="gallery-item rounded-2xl overflow-hidden aspect-square reveal" onclick="createHeartBurst(event)">
+                    <img src="https://baguzae.github.io/ntah/foto3.png" 
+                         alt="Foto Dde Elvaa 3" 
+                         onerror="this.parentElement.innerHTML='<div class=\'gallery-placeholder\'><span>Foto 3</span></div>'">
+                    <div class="gallery-overlay">
+                        <span style="color: #ffffff; font-weight: 600;">Bersama Selamanya</span>
+                    </div>
+                </div>
+                
+                <!-- FOTO 4 - Ganti src dengan path foto kamu -->
+                <div class="gallery-item rounded-2xl overflow-hidden aspect-square reveal" onclick="createHeartBurst(event)">
+                    <img src="https://baguzae.github.io/ntah/foto4.png" 
+                         alt="Foto Dde Elvaa 4" 
+                         onerror="this.parentElement.innerHTML='<div class=\'gallery-placeholder\'><span>Foto 4</span></div>'">
+                    <div class="gallery-overlay">
+                        <span style="color: #ffffff; font-weight: 600;">Senyummu</span>
+                    </div>
+                </div>
+                
+                <!-- FOTO 5 - Ganti src dengan path foto kamu -->
+                <div class="gallery-item rounded-2xl overflow-hidden aspect-square reveal" onclick="createHeartBurst(event)">
+                    <img src="https://baguzae.github.io/ntah/foto5.png" 
+                         alt="Foto Dde Elvaa 5" 
+                         onerror="this.parentElement.innerHTML='<div class=\'gallery-placeholder\'><span>Foto 5</span></div>'">
+                    <div class="gallery-overlay">
+                        <span style="color: #ffffff; font-weight: 600;">Cinta Kita</span>
+                    </div>
+                </div>
+                
+                <!-- FOTO 6 - Ganti src dengan path foto kamu -->
+                <div class="gallery-item rounded-2xl overflow-hidden aspect-square reveal" onclick="createHeartBurst(event)">
+                    <img src="https://baguzae.github.io/ntah/foto6.png" 
+                         alt="Foto Dde Elvaa 6" 
+                         onerror="this.parentElement.innerHTML='<div class=\'gallery-placeholder\'><span>Foto 6</span></div>'">
+                    <div class="gallery-overlay">
+                        <span style="color: #ffffff; font-weight: 600;">Selamanya</span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Final Section -->
+    <section id="final" class="py-24 px-6 relative min-h-screen flex items-center" style="background: var(--bg-deep);">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="reveal">
+                <div class="w-24 h-24 mx-auto mb-8 rounded-full flex items-center justify-center float" style="background: linear-gradient(135deg, var(--rose-gold), var(--gold));">
+                    <svg class="w-12 h-12 heartbeat" viewBox="0 0 24 24" fill="#ffffff">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                    </svg>
+                </div>
+            </div>
+            
+            <h2 class="font-display text-4xl md:text-6xl lg:text-7xl font-bold mb-8 reveal" style="color: var(--text-primary);">
+                Selamat Hari<br>
+                <span style="color: var(--rose-gold);">Perempuan Sedunia</span>
+            </h2>
+            
+            <p class="text-xl md:text-2xl mb-4 reveal" style="color: var(--text-secondary);">
+                Selfana, kamu adalah alasan kenapa aku percaya bahwa keajaiban itu nyata.
+            </p>
+            
+            <p class="text-lg mb-12 max-w-2xl mx-auto reveal" style="color: var(--text-muted);">
+                Terima kasih sudah menjadi kamu yang luar biasa.
+            </p>
+            
+            <div class="reveal">
+                <button id="specialBtn" class="btn-romantic px-10 py-5 rounded-full font-semibold text-xl" style="color: #ffffff;">
+                    Klik Aku Sayang
+                </button>
+            </div>
+            
+            <div id="specialMessage" class="mt-12 hidden">
+                <div class="love-card rounded-3xl p-8 md:p-12 max-w-2xl mx-auto">
+                    <p class="font-display text-2xl md:text-3xl leading-loose" style="color: var(--text-primary);">
+                        Selfana, aku sayang kamu lebih dari apapun di dunia ini. Kamu adalah segalanya bagiku, hari ini, esok, dan selamanya.
+                    </p>
+                    <div class="mt-8 flex justify-center gap-2 items-center">
+                        <span class="text-3xl" style="color: var(--text-primary);">I</span>
+                        <svg class="w-8 h-8 heartbeat" viewBox="0 0 24 24" fill="currentColor" style="color: var(--rose-gold);">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                        </svg>
+                        <span class="text-3xl" style="color: var(--text-primary);">Dde Elvaa</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Decorative -->
+        <div class="orb absolute top-1/3 left-10 w-40 h-40" style="background: var(--rose-gold);"></div>
+        <div class="orb absolute bottom-1/3 right-10 w-48 h-48" style="background: var(--gold);"></div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 px-6 text-center section-card" style="border-top: 1px solid var(--border-color);">
+        <p class="font-display text-lg" style="color: var(--text-secondary);">
+            Dibuat dengan <svg class="w-5 h-5 inline-block heartbeat" viewBox="0 0 24 24" fill="currentColor" style="color: var(--rose-gold);"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> untuk My Future Wife ❤
+        </p>
+    </footer>
+
+    <!-- Music Player -->
+    <div class="music-player">
+        <div class="music-visualizer paused" id="musicVisualizer">
+            <div class="music-bar"></div>
+            <div class="music-bar"></div>
+            <div class="music-bar"></div>
+            <div class="music-bar"></div>
+            <div class="music-bar"></div>
+        </div>
+        <div class="music-info">
+            <span class="music-title">Kau Jadi Sayang - Baguz Ae</span>
+            <span class="music-status" id="musicStatus">Klik untuk memutar</span>
+        </div>
+        <button class="music-btn" id="musicBtn" aria-label="Play/Pause music">
+            <svg id="playIcon" viewBox="0 0 24 24" fill="currentColor">
+                <polygon points="5 3 19 12 5 21 5 3"/>
+            </svg>
+            <svg id="pauseIcon" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
+                <rect x="6" y="4" width="4" height="16"/>
+                <rect x="14" y="4" width="4" height="16"/>
+            </svg>
+        </button>
+    </div>
+
+    <!-- Audio Element - Ganti src dengan URL musik kamu -->
+    <audio id="bgMusic" loop>
+        <source src="https://baguzae.github.io/valentine/valentine.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // Initialize all DOM elements first
+        const floatingHeartsContainer = document.getElementById('floatingHearts');
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const letterToggle = document.getElementById('letterToggle');
+        const letterContent = document.getElementById('letterContent');
+        const letterArrow = document.getElementById('letterArrow');
+        const specialBtn = document.getElementById('specialBtn');
+        const specialMessage = document.getElementById('specialMessage');
+        const themeToggle = document.getElementById('themeToggle');
+        const themeToggleMobile = document.getElementById('themeToggleMobile');
+        const musicBtn = document.getElementById('musicBtn');
+        const bgMusic = document.getElementById('bgMusic');
+        const playIcon = document.getElementById('playIcon');
+        const pauseIcon = document.getElementById('pauseIcon');
+        const musicVisualizer = document.getElementById('musicVisualizer');
+        const musicStatus = document.getElementById('musicStatus');
+
+        // Theme Management
+        let currentTheme = localStorage.getItem('theme') || 'dark';
+        
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            currentTheme = theme;
+        }
+        
+        // Set initial theme
+        setTheme(currentTheme);
+
+        function toggleTheme() {
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            setTheme(newTheme);
+        }
+
+        if (themeToggle) {
+            themeToggle.addEventListener('click', toggleTheme);
+        }
+        if (themeToggleMobile) {
+            themeToggleMobile.addEventListener('click', toggleTheme);
+        }
+
+        // Music Player
+        let isPlaying = false;
+
+        function toggleMusic() {
+            if (isPlaying) {
+                bgMusic.pause();
+                playIcon.style.display = 'block';
+                pauseIcon.style.display = 'none';
+                musicVisualizer.classList.add('paused');
+                musicStatus.textContent = 'Dijeda';
+            } else {
+                bgMusic.play().catch(function(error) {
+                    console.log('Audio play failed:', error);
+                });
+                playIcon.style.display = 'none';
+                pauseIcon.style.display = 'block';
+                musicVisualizer.classList.remove('paused');
+                musicStatus.textContent = 'Sedang diputar';
+            }
+            isPlaying = !isPlaying;
+        }
+
+        if (musicBtn) {
+            musicBtn.addEventListener('click', toggleMusic);
+        }
+
+        // Floating Hearts
+        function createFloatingHeart() {
+            if (!floatingHeartsContainer) return;
+            
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="color: var(--rose-gold);"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>';
+            
+            const size = Math.random() * 15 + 10;
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.fontSize = size + 'px';
+            heart.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            heart.style.animationDelay = (Math.random() * 5) + 's';
+            
+            floatingHeartsContainer.appendChild(heart);
+            
+            setTimeout(function() {
+                if (heart.parentNode) {
+                    heart.remove();
+                }
+            }, 20000);
+        }
+
+        // Create initial hearts
+        for (let i = 0; i < 15; i++) {
+            setTimeout(createFloatingHeart, i * 500);
+        }
+        setInterval(createFloatingHeart, 1500);
+
+        // Sparkle Effect on Click
+        function createSparkle(x, y) {
+            for (let i = 0; i < 8; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.left = x + 'px';
+                sparkle.style.top = y + 'px';
+                
+                const angle = (i / 8) * Math.PI * 2;
+                const distance = Math.random() * 50 + 30;
+                const dx = Math.cos(angle) * distance;
+                const dy = Math.sin(angle) * distance;
+                
+                sparkle.style.transform = 'translate(' + dx + 'px, ' + dy + 'px)';
+                document.body.appendChild(sparkle);
+                
+                setTimeout(function() {
+                    sparkle.remove();
+                }, 800);
+            }
+        }
+
+        // Heart Burst Effect
+        function createHeartBurst(event) {
+            const x = event.clientX;
+            const y = event.clientY;
+            
+            for (let i = 0; i < 5; i++) {
+                setTimeout(function() {
+                    const heart = document.createElement('div');
+                    heart.className = 'heart-burst';
+                    heart.innerHTML = '<svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor" style="color: var(--rose-gold);"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>';
+                    
+                    const offsetX = (Math.random() - 0.5) * 100;
+                    const offsetY = (Math.random() - 0.5) * 100;
+                    heart.style.left = (x + offsetX) + 'px';
+                    heart.style.top = (y + offsetY) + 'px';
+                    
+                    document.body.appendChild(heart);
+                    setTimeout(function() {
+                        heart.remove();
+                    }, 1000);
+                }, i * 100);
+            }
+            
+            createSparkle(x, y);
+        }
+
+        // Click effect on document
+        document.addEventListener('click', function(e) {
+            createSparkle(e.clientX, e.clientY);
+        });
+
+        // Mobile Menu Toggle
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+
+        // Close mobile menu on link click
+        document.querySelectorAll('#mobileMenu a').forEach(function(link) {
+            link.addEventListener('click', function() {
+                if (mobileMenu) {
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+
+        // Love Letter Toggle
+        if (letterToggle && letterContent && letterArrow) {
+            letterToggle.addEventListener('click', function() {
+                letterContent.classList.toggle('open');
+                letterArrow.style.transform = letterContent.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0)';
+            });
+        }
+
+        // Special Button
+        if (specialBtn && specialMessage) {
+            specialBtn.addEventListener('click', function() {
+                specialMessage.classList.toggle('hidden');
+                specialBtn.textContent = specialMessage.classList.contains('hidden') ? 'Klik Aku Sayang' : 'Terima Kasih Dde Elvaa';
+                
+                // Create lots of hearts
+                for (let i = 0; i < 20; i++) {
+                    setTimeout(function() {
+                        createFloatingHeart();
+                    }, i * 100);
+                }
+            });
+        }
+
+        // Scroll to section
+        function scrollToSection(id) {
+            const element = document.getElementById(id);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Scroll Reveal with IntersectionObserver
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry, index) {
+                if (entry.isIntersecting) {
+                    setTimeout(function() {
+                        entry.target.classList.add('visible');
+                    }, index * 100);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(function(el) {
+            observer.observe(el);
+        });
+
+        // Keyboard navigation
+        document.querySelectorAll('a, button').forEach(function(el) {
+            el.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    el.click();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

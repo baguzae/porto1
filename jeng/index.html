@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Untuk Audiajeng 💌</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Playfair+Display:ital,wght@0,400;1,500&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --rose: #c8506a;
+    --blush: #f7d6de;
+    --cream: #fdf5f0;
+    --deep: #2a1520;
+    --gold: #d4a76a;
+    --muted: #9b7080;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--deep);
+    font-family: 'Cormorant Garamond', serif;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    width: 12px; height: 12px;
+    background: var(--rose);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease;
+    mix-blend-mode: multiply;
+  }
+  .cursor-trail {
+    width: 30px; height: 30px;
+    border: 1px solid var(--rose);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: all 0.3s ease;
+    opacity: 0.5;
+  }
+
+  /* Floating petals */
+  .petal {
+    position: fixed;
+    pointer-events: none;
+    font-size: 1rem;
+    animation: falling linear infinite;
+    opacity: 0;
+    z-index: 1;
+  }
+  @keyframes falling {
+    0% { transform: translateY(-40px) rotate(0deg); opacity: 0.7; }
+    100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+  }
+
+  /* ===== INTRO SECTION ===== */
+  #intro {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    background: radial-gradient(ellipse at 60% 40%, #fde8ee 0%, #fdf5f0 70%);
+  }
+
+  .bg-pattern {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, #e8b4bf 1px, transparent 1px);
+    background-size: 40px 40px;
+    opacity: 0.2;
+  }
+
+  .envelope-wrap {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    animation: fadeUp 1.2s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .envelope {
+    width: 180px;
+    height: 130px;
+    background: white;
+    border-radius: 4px;
+    margin: 0 auto 2rem;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(200, 80, 106, 0.15);
+    cursor: pointer;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
+  .envelope:hover {
+    transform: scale(1.05) translateY(-6px);
+    box-shadow: 0 30px 80px rgba(200, 80, 106, 0.25);
+  }
+  .envelope::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 65px;
+    background: #f9e4e9;
+    clip-path: polygon(0 0, 50% 60%, 100% 0);
+    border-radius: 4px 4px 0 0;
+    z-index: 2;
+    transition: transform 0.5s ease;
+  }
+  .envelope:hover::before {
+    transform: rotateX(180deg);
+    transform-origin: top center;
+  }
+  .envelope::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 65px;
+    background: #fce8ed;
+    clip-path: polygon(0 100%, 50% 40%, 100% 100%);
+    border-radius: 0 0 4px 4px;
+  }
+  .env-sides {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #fce8ed, #fdf0f3);
+  }
+  .env-seal {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+    z-index: 3;
+  }
+
+  .intro-name {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(3rem, 8vw, 5.5rem);
+    color: var(--rose);
+    line-height: 1;
+    animation: fadeUp 1.2s 0.3s ease both;
+  }
+
+  .intro-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(1rem, 2.5vw, 1.3rem);
+    color: var(--muted);
+    margin-top: 0.75rem;
+    letter-spacing: 0.15em;
+    animation: fadeUp 1.2s 0.6s ease both;
+  }
+
+  .open-btn {
+    margin-top: 2.5rem;
+    padding: 0.9rem 2.8rem;
+    background: var(--rose);
+    color: white;
+    border: none;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    border-radius: 50px;
+    box-shadow: 0 8px 30px rgba(200, 80, 106, 0.35);
+    transition: all 0.3s ease;
+    animation: fadeUp 1.2s 0.9s ease both;
+  }
+  .open-btn:hover {
+    background: #b03d57;
+    transform: translateY(-3px);
+    box-shadow: 0 14px 40px rgba(200, 80, 106, 0.45);
+  }
+
+  /* ===== LETTER SECTION ===== */
+  #letter {
+    min-height: 100vh;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5rem 1.5rem;
+    background: linear-gradient(180deg, #fdf5f0 0%, #fde8ee 100%);
+    position: relative;
+  }
+  #letter.visible { display: flex; }
+
+  .paper {
+    max-width: 680px;
+    width: 100%;
+    background: white;
+    border-radius: 2px;
+    padding: clamp(2.5rem, 6vw, 4.5rem);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.03), 0 30px 80px rgba(200,80,106,0.1), 0 0 0 1px rgba(200,80,106,0.06);
+    position: relative;
+    animation: revealPaper 0.8s ease both;
+  }
+  @keyframes revealPaper {
+    from { opacity: 0; transform: translateY(30px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  /* paper lines */
+  .paper::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+      transparent,
+      transparent 31px,
+      #f5e8eb 31px,
+      #f5e8eb 32px
+    );
+    background-position: 0 4rem;
+    opacity: 0.4;
+    border-radius: 2px;
+    pointer-events: none;
+  }
+
+  .letter-date {
+    font-style: italic;
+    color: var(--muted);
+    font-size: 0.95rem;
+    letter-spacing: 0.05em;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: fadeIn 0.6s 0.4s ease forwards;
+  }
+
+  .letter-greeting {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(2rem, 5vw, 2.8rem);
+    color: var(--rose);
+    margin-bottom: 1.8rem;
+    opacity: 0;
+    animation: fadeIn 0.6s 0.6s ease forwards;
+  }
+
+  .letter-body p {
+    font-size: clamp(1.05rem, 2.2vw, 1.22rem);
+    line-height: 2;
+    color: #3d2030;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+  }
+  .letter-body p:nth-child(1) { animation: fadeIn 0.6s 0.8s ease forwards; }
+  .letter-body p:nth-child(2) { animation: fadeIn 0.6s 1.0s ease forwards; }
+  .letter-body p:nth-child(3) { animation: fadeIn 0.6s 1.2s ease forwards; }
+  .letter-body p:nth-child(4) { animation: fadeIn 0.6s 1.4s ease forwards; }
+
+  .letter-highlight {
+    color: var(--rose);
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  .letter-closing {
+    margin-top: 2.5rem;
+    text-align: right;
+    opacity: 0;
+    animation: fadeIn 0.6s 1.6s ease forwards;
+  }
+  .letter-closing .closing-text {
+    font-style: italic;
+    color: var(--muted);
+    font-size: 1rem;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  .letter-closing .sender {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2rem;
+    color: var(--rose);
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ===== QUESTION SECTION ===== */
+  #question {
+    min-height: 100vh;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 1.5rem;
+    background: radial-gradient(ellipse at 50% 50%, #fce4ec, #fdf5f0);
+    text-align: center;
+  }
+  #question.visible { display: flex; }
+
+  .heart-big {
+    font-size: 5rem;
+    animation: heartbeat 1.4s ease-in-out infinite;
+    display: block;
+    margin-bottom: 2rem;
+  }
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    14% { transform: scale(1.15); }
+    28% { transform: scale(1); }
+    42% { transform: scale(1.1); }
+    70% { transform: scale(1); }
+  }
+
+  .question-text {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    color: var(--deep);
+    line-height: 1.3;
+    max-width: 600px;
+    margin-bottom: 3rem;
+    animation: fadeUp 0.8s ease both;
+  }
+  .question-text span {
+    color: var(--rose);
+    font-style: italic;
+  }
+
+  .choice-wrap {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+
+  .btn-yes {
+    padding: 1rem 3rem;
+    background: var(--rose);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    box-shadow: 0 8px 30px rgba(200,80,106,0.4);
+    transition: all 0.3s ease;
+  }
+  .btn-yes:hover {
+    transform: scale(1.08) translateY(-4px);
+    box-shadow: 0 14px 40px rgba(200,80,106,0.5);
+  }
+
+  .btn-no {
+    padding: 1rem 3rem;
+    background: transparent;
+    color: var(--muted);
+    border: 1.5px solid var(--muted);
+    border-radius: 50px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+
+  .no-hint {
+    font-size: 0.8rem;
+    color: #cbb0b8;
+    margin-top: 1.2rem;
+    font-style: italic;
+    letter-spacing: 0.05em;
+    animation: fadeIn 0.5s 1s ease both;
+    opacity: 0;
+  }
+
+  /* ===== YES SECTION ===== */
+  #yessection {
+    min-height: 100vh;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    background: linear-gradient(135deg, #fce4ec, #fff0f5);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  #yessection.visible { display: flex; }
+
+  .firework {
+    position: absolute;
+    font-size: 2rem;
+    animation: fireworkAnim 1.5s ease-out forwards;
+    pointer-events: none;
+  }
+  @keyframes fireworkAnim {
+    0% { opacity: 1; transform: scale(0) translateY(0); }
+    80% { opacity: 1; }
+    100% { opacity: 0; transform: scale(1.5) translateY(-80px); }
+  }
+
+  .yes-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(3rem, 10vw, 6rem);
+    color: var(--rose);
+    animation: bounceIn 0.8s ease both;
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+  @keyframes bounceIn {
+    0% { opacity: 0; transform: scale(0.3); }
+    60% { transform: scale(1.1); }
+    80% { transform: scale(0.95); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+
+  .yes-sub {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    color: var(--muted);
+    margin-bottom: 3rem;
+    animation: fadeIn 0.8s 0.5s ease both;
+    opacity: 0;
+  }
+
+  .hearts-row {
+    font-size: 2.5rem;
+    letter-spacing: 0.5rem;
+    animation: fadeIn 0.8s 1s ease both;
+    opacity: 0;
+  }
+
+  .final-msg {
+    max-width: 500px;
+    font-size: 1.1rem;
+    line-height: 1.9;
+    color: #5a3040;
+    margin-top: 2rem;
+    font-style: italic;
+    animation: fadeIn 0.8s 1.3s ease both;
+    opacity: 0;
+  }
+
+  /* ===== SCROLL INDICATOR ===== */
+  .scroll-hint {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.8rem;
+    color: var(--muted);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    animation: fadeUp 1.2s 1.5s ease both, bobbing 2s 3s ease-in-out infinite;
+    opacity: 0;
+  }
+  @keyframes bobbing {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(6px); }
+  }
+  .scroll-hint::after {
+    content: '↓';
+    font-size: 1.2rem;
+    color: var(--rose);
+  }
+
+  /* decorative border */
+  .deco-border {
+    position: absolute;
+    top: 2rem; left: 2rem; right: 2rem; bottom: 2rem;
+    border: 1px solid rgba(200,80,106,0.12);
+    border-radius: 4px;
+    pointer-events: none;
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-trail" id="cursorTrail"></div>
+
+<!-- ===== INTRO ===== -->
+<section id="intro">
+  <div class="bg-pattern"></div>
+  <div class="deco-border"></div>
+
+  <div class="envelope-wrap">
+    <div class="envelope" onclick="openLetter()">
+      <div class="env-sides"></div>
+      <div class="env-seal">💌</div>
+    </div>
+    <h1 class="intro-name">Audiajeng</h1>
+    <p class="intro-sub">ada sesuatu yang ingin kusampaikan...</p>
+    <button class="open-btn" onclick="openLetter()">Buka Surat ✦</button>
+  </div>
+
+  <div class="scroll-hint">geser ke bawah</div>
+</section>
+
+<!-- ===== LETTER ===== -->
+<section id="letter">
+  <div class="paper">
+    <p class="letter-date">Suatu hari yang berarti, 2025</p>
+    <p class="letter-greeting">Hei, Audiajeng... 🌸</p>
+    <div class="letter-body">
+      <p>
+        Ada hal-hal kecil yang selalu membuatku tersenyum tanpa sadar —
+        dan hampir semuanya ada hubungannya denganmu.
+        Caramu berbicara, tawamu yang jujur, bahkan cara kamu diam sekalipun.
+      </p>
+      <p>
+        Aku sudah mencoba berpura-pura ini biasa saja.
+        Tapi semakin kucoba, semakin jelas bagiku bahwa
+        <span class="letter-highlight">kamu bukan sesuatu yang bisa aku pura-purakan biasa.</span>
+      </p>
+      <p>
+        Aku tidak tahu apakah waktunya tepat, atau apakah kata-kataku cukup.
+        Tapi aku tahu satu hal — <span class="letter-highlight">menyimpan perasaan ini lebih berat
+        dari sekadar jujur padamu.</span>
+      </p>
+      <p>
+        Jadi sebelum terlambat, sebelum momen ini berlalu —
+        izinkan aku bertanya sesuatu yang sudah lama menggantung di dadaku...
+      </p>
+    </div>
+    <div class="letter-closing">
+      <span class="closing-text">dengan perasaan yang tulus,</span>
+      <span class="sender">Seseorang yang suka kamu 🌹</span>
+    </div>
+  </div>
+
+  <button class="open-btn" style="margin-top: 2.5rem;" onclick="showQuestion()">Lanjutkan... →</button>
+</section>
+
+<!-- ===== QUESTION ===== -->
+<section id="question">
+  <span class="heart-big">💗</span>
+  <h2 class="question-text">
+    Audiajeng,<br>
+    maukah kamu jadi <span>kekasihku?</span>
+  </h2>
+  <div class="choice-wrap">
+    <button class="btn-yes" onclick="sayYes()">💖 Iya, mau!</button>
+    <button class="btn-no" id="noBtn" onmouseover="moveNoBtn()" onclick="moveNoBtn()">Tidak...</button>
+  </div>
+  <p class="no-hint">*tombol "tidak" memang susah diklik 😉</p>
+</section>
+
+<!-- ===== YES ===== -->
+<section id="yessection">
+  <div class="yes-title">Yeay! 🎉</div>
+  <p class="yes-sub">Kamu baru saja membuat hariku (dan seterusnya) sempurna</p>
+  <div class="hearts-row">💕 💖 💗 💓 💞</div>
+  <p class="final-msg">
+    Makasih ya, Audiajeng 🌸<br>
+    Aku janji akan selalu hadir, memperhatikan hal-hal kecilmu,
+    dan menjadi alasan yang baik untuk kamu tersenyum setiap harinya.
+    <br><br>
+    Ini baru permulaan yang indah. 🌹
+  </p>
+</section>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const trail = document.getElementById('cursorTrail');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+    setTimeout(() => {
+      trail.style.left = e.clientX + 'px';
+      trail.style.top = e.clientY + 'px';
+    }, 80);
+  });
+
+  // Floating petals
+  const petalChars = ['🌸', '🌺', '✿', '❀', '🌼'];
+  function createPetal() {
+    const p = document.createElement('div');
+    p.className = 'petal';
+    p.textContent = petalChars[Math.floor(Math.random() * petalChars.length)];
+    p.style.left = Math.random() * 100 + 'vw';
+    p.style.fontSize = (Math.random() * 0.8 + 0.6) + 'rem';
+    p.style.animationDuration = (Math.random() * 5 + 6) + 's';
+    p.style.animationDelay = (Math.random() * 4) + 's';
+    document.body.appendChild(p);
+    setTimeout(() => p.remove(), 12000);
+  }
+  setInterval(createPetal, 1200);
+
+  function openLetter() {
+    document.getElementById('intro').style.display = 'none';
+    const l = document.getElementById('letter');
+    l.classList.add('visible');
+    window.scrollTo(0, 0);
+  }
+
+  function showQuestion() {
+    document.getElementById('letter').classList.remove('visible');
+    document.getElementById('letter').style.display = 'none';
+    const q = document.getElementById('question');
+    q.classList.add('visible');
+    window.scrollTo(0, 0);
+  }
+
+  function sayYes() {
+    document.getElementById('question').classList.remove('visible');
+    document.getElementById('question').style.display = 'none';
+    const y = document.getElementById('yessection');
+    y.classList.add('visible');
+    window.scrollTo(0, 0);
+    launchFireworks();
+    // extra petals burst
+    for (let i = 0; i < 30; i++) setTimeout(createPetal, i * 100);
+  }
+
+  function launchFireworks() {
+    const emojis = ['🎉','✨','💖','🌸','💫','🎊','💕','🌟'];
+    for (let i = 0; i < 20; i++) {
+      setTimeout(() => {
+        const f = document.createElement('div');
+        f.className = 'firework';
+        f.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        f.style.left = (10 + Math.random() * 80) + 'vw';
+        f.style.top = (20 + Math.random() * 60) + 'vh';
+        f.style.animationDelay = (Math.random() * 0.5) + 's';
+        document.getElementById('yessection').appendChild(f);
+        setTimeout(() => f.remove(), 2000);
+      }, i * 150);
+    }
+  }
+
+  let noClickCount = 0;
+  function moveNoBtn() {
+    noClickCount++;
+    const btn = document.getElementById('noBtn');
+    const vw = window.innerWidth - 150;
+    const vh = window.innerHeight - 60;
+    btn.style.position = 'fixed';
+    btn.style.left = Math.max(10, Math.random() * vw) + 'px';
+    btn.style.top = Math.max(10, Math.random() * vh) + 'px';
+    btn.style.zIndex = 100;
+    if (noClickCount >= 3) {
+      btn.textContent = 'Masih tidak? 😢';
+    }
+    if (noClickCount >= 6) {
+      btn.textContent = 'Oke fine... 😭';
+      btn.style.opacity = '0.3';
+    }
+  }
+</script>
+</body>
+</html>
